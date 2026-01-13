@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-gradient-to-br from-[#1e3a70] to-[#2c5aa0] text-white px-6 pt-16 pb-8 overflow-hidden">
+    <footer className="relative bg-linear-to-br from-[#1e3a70] to-[#2c5aa0] text-white px-6 pt-16 pb-8 overflow-hidden">
       
       {/* top border line */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-white/30 to-transparent" />
 
       <div className="max-w-7xl mx-auto">
         
