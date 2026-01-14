@@ -173,9 +173,7 @@ const ChatWindow = ({ isOpen, onClose }) => {
             </button>
           </div>
 
-          <p className="text-xs text-gray-500 mt-2 text-center">
-            Powered by Backend Server (Gemini coming soon)
-          </p>
+         
         </div>
       </div>
     </div>
