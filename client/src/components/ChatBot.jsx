@@ -12,24 +12,44 @@ const ChatBot = () => {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
 
-  const handleSend = () => {
-    if (!input.trim()) return;
+  const handleSend = async () => {
+    if (!input.trim() || isTyping) return;
 
     const userMessage = { sender: "user", text: input };
+
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setIsTyping(true);
 
-    setTimeout(() => {
+    try {
+      const res = await fetch("http://localhost:5050/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userMessage.text }),
+      });
+
+      const data = await res.json();
+
       setMessages((prev) => [
         ...prev,
         {
           sender: "bot",
-          text: "Thanks for your message! I’ll respond soon.",
+          text: data.reply || "Sorry, I couldn't understand that.",
         },
       ]);
+    } catch (error) {
+      setMessages((prev) => [
+        ...prev,
+        {
+          sender: "bot",
+          text: "⚠️ Server error. Please try again later.",
+        },
+      ]);
+    } finally {
       setIsTyping(false);
-    }, 1200);
+    }
   };
 
   return (
@@ -37,10 +57,8 @@ const ChatBot = () => {
       {/* Floating Button with Animation */}
       {!isOpen && (
         <div className="fixed bottom-6 right-6 z-50">
-          {/* Ping effect */}
           <span className="absolute inset-0 rounded-full bg-blue-600 opacity-75 animate-ping"></span>
 
-          {/* Chat button */}
           <button
             onClick={() => setIsOpen(true)}
             className="relative bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-2xl
@@ -53,7 +71,7 @@ const ChatBot = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 w-80 h-112.5 bg-white rounded-2xl shadow-2xl flex flex-col z-50">
+        <div className="fixed bottom-6 right-6 w-80 h-[450px] bg-white rounded-2xl shadow-2xl flex flex-col z-50">
           
           {/* Header */}
           <div className="bg-blue-600 text-white px-4 py-3 flex justify-between items-center rounded-t-2xl">

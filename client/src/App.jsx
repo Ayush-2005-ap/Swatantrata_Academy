@@ -6,7 +6,7 @@ import Programs from './pages/Programs';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import Footer from './components/Footer';
-import ChatBot from './components/ChatBot';
+import ChatBot from './chatbot/ChatBot';
 
 function App() {
   return (
