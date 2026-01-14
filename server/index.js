@@ -1,9 +1,9 @@
+import dotenv from "dotenv";
+dotenv.config(); // 👈 MUST BE FIRST LINE
+
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import chatRoutes from "./routes/chat.routes.js";
-
-dotenv.config();
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(express.json());
 app.use("/api/chat", chatRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Backend running successfully 🚀");
+  res.send("Swatantra Chatbot Backend Running 🚀");
 });
 
 const PORT = process.env.PORT || 5050;

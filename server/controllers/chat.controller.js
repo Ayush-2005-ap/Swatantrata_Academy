@@ -1,43 +1,50 @@
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 
 export const handleChat = async (req, res) => {
   try {
-    // 1. Initialize the client INSIDE the function
-    // This prevents the "undefined key" error on server startup
-    if (!process.env.GEMINI_API_KEY) {
-      throw new Error("GEMINI_API_KEY is missing from environment variables");
-    }
-    
-    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
     const { message } = req.body;
+
+    if (!process.env.GROQ_API_KEY) {
+      return res.status(500).json({
+        reply: "Server misconfigured (API key missing)",
+      });
+    }
 
     if (!message) {
       return res.status(400).json({ reply: "Message is required" });
     }
 
-    // 2. Setup the model
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
+    // ✅ Initialize Groq INSIDE function
+    const groq = new Groq({
+      apiKey: process.env.GROQ_API_KEY,
     });
 
-    // 3. Generate content
-    const result = await model.generateContent({
-      contents: [
+    const completion = await groq.chat.completions.create({
+      model: "llama-3.1-8b-instant",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are Swatantra Academy Assistant. Be polite, concise, and helpful.",
+        },
         {
           role: "user",
-          parts: [{ text: message }],
+          content: message,
         },
       ],
+      temperature: 0.7,
+      max_tokens: 300,
     });
 
-    const reply = result.response.text();
+    const reply =
+      completion.choices?.[0]?.message?.content ||
+      "Sorry, I couldn’t generate a response.";
 
-    res.status(200).json({ reply });
+    res.json({ reply });
   } catch (error) {
-    console.error("Gemini error:", error.message);
+    console.error("🔥 Groq Error:", error);
     res.status(500).json({
-      reply: "Gemini error. Please try again.",
+      reply: "⚠️ Server error. Please try again.",
     });
   }
 };
