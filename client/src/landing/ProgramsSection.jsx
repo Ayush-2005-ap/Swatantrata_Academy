@@ -1,119 +1,128 @@
-import { useState, useEffect, useRef } from 'react';
-import { BookOpen, Users, Award, Briefcase, Calendar, TrendingUp } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Clock, MapPin } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const ProgramsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
+      ([entry]) => entry.isIntersecting && setIsVisible(true),
       { threshold: 0.1 }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
   }, []);
 
   const programs = [
     {
-      icon: BookOpen,
-      title: 'Policy Research',
-      description: 'Engage in cutting-edge research on liberal economic policies and governance.',
-      color: 'from-blue-500 to-cyan-500',
+      title: 'Policy Research Fellowship',
+      description:
+        'An intensive research program focused on public policy, governance, and economic reforms.',
+      duration: '6 Months',
+      location: 'New Delhi',
+      image: '/banners/banner1.jpg', // placeholder
     },
     {
-      icon: Users,
-      title: 'Leadership Programs',
-      description: 'Develop leadership skills through intensive workshops and mentorship.',
-      color: 'from-purple-500 to-pink-500',
+      title: 'Colloquium ',
+      description:
+        'A hands-on leadership journey with mentorship, workshops, and real-world exposure.',
+      duration: '3 Months',
+      location: 'Mumbai',
+      image: '/banners/banner2.jpg',
     },
     {
-      icon: Award,
-      title: 'Fellowships',
-      description: 'Competitive fellowships for outstanding individuals committed to change.',
-      color: 'from-orange-500 to-red-500',
+      title: 'Public Policy Internship',
+      description:
+        'Work closely with policy experts and think tanks on real policy challenges.',
+      duration: '8 Weeks',
+      location: 'Hybrid',
+      image: '/banners/banner3.jpg',
     },
     {
-      icon: Briefcase,
-      title: 'Internships',
-      description: 'Hands-on experience in policy analysis and advocacy.',
-      color: 'from-green-500 to-teal-500',
-    },
-    {
-      icon: Calendar,
-      title: 'Events & Conferences',
-      description: 'Connect with thought leaders and policymakers at our events.',
-      color: 'from-indigo-500 to-purple-500',
-    },
-    {
-      icon: TrendingUp,
-      title: 'Career Development',
-      description: 'Build your career in public policy with expert guidance.',
-      color: 'from-pink-500 to-rose-500',
+      title: 'Annual Policy Conference',
+      description:
+        'Connect with policymakers, scholars, and industry leaders from across the country.',
+      duration: '2 Days',
+      location: 'Bengaluru',
+      image: '/assets/programs/conference.jpg',
     },
   ];
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section ref={sectionRef} className="py-20 bg-gray-400/50">
+      <div className="max-w-7xl mx-auto px-4">
+
+        {/* Heading */}
         <div className="text-center mb-16">
-          <h2
-            className={`text-4xl md:text-5xl font-bold text-gray-900 mb-4 transition-all duration-1000 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-          >
-            SWANTATRA ACADEMY'S
-            <br />
-            <span className="text-blue-600">PROGRAMS AND EVENTS</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Our <span className="text-blue-600">Programs & Events</span>
           </h2>
-          <p
-            className={`text-lg text-gray-600 max-w-2xl mx-auto transition-all duration-1000 delay-200 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
-          >
-            Explore our diverse range of programs designed to nurture critical thinking and leadership
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Carefully curated programs to shape future leaders and thinkers
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Program Cards */}
+        <div className="space-y-8">
           {programs.map((program, index) => (
             <div
               key={index}
-              className={`group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
+              className={`bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500
+                          flex flex-col md:flex-row overflow-hidden transform hover:-translate-y-1
+                          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
+              style={{ transitionDelay: `${index * 120}ms` }}
             >
-              <div className={`w-16 h-16 bg-gradient-to-br ${program.color} rounded-xl flex items-center justify-center mb-6 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
-                <program.icon className="text-white" size={32} />
+              {/* Image */}
+              <div className="md:w-1/3 h-56 md:h-auto bg-gray-200">
+                <img
+                  src={program.image}
+                  alt={program.title}
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
-                {program.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed">
-                {program.description}
-              </p>
-              <div className="mt-6 flex items-center text-blue-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
-                <span>Learn More</span>
-                <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                </svg>
+
+              {/* Content */}
+              <div className="flex-1 p-8 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
+                    {program.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed mb-6">
+                    {program.description}
+                  </p>
+                </div>
+
+                {/* Meta Info */}
+                <div className="flex items-center gap-6 text-gray-500 text-sm">
+                  <div className="flex items-center gap-2">
+                    <Clock size={16} />
+                    <span>{program.duration}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin size={16} />
+                    <span>{program.location}</span>
+                  </div>
+                </div>
               </div>
             </div>
           ))}
         </div>
+
+        {/* View More */}
+        <div className="mt-16 text-center">
+          <button
+            onClick={() => navigate('/programs')}
+            className="px-10 py-3 bg-blue-600 text-white rounded-full text-lg font-semibold
+                       hover:bg-blue-700 transition-all duration-300 shadow-lg hover:scale-105"
+          >
+            View All Programs
+          </button>
+        </div>
+
       </div>
     </section>
   );
