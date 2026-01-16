@@ -57,7 +57,7 @@ const FeaturedFaculty = () => {
               <div className="group flex flex-col items-center cursor-pointer">
                 
                 {/* Image */}
-                <div className="relative w-36 h-36 rounded-full overflow-hidden">
+                <div className="relative w-36 h-36  overflow-hidden">
                   <img
                     src={faculty.image}
                     alt={faculty.name}
