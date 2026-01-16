@@ -7,6 +7,7 @@ import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import Footer from './components/Footer';
 import ChatBot from './chatbot/ChatBot';
+import Faculty from './pages/Faculty';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/programs" element={<Programs />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
+          <Route path="/faculty" element={<Faculty />} />
         </Routes>
         <ChatBot />
         <Footer />
