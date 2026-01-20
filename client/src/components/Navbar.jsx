@@ -74,7 +74,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Socials */}
-          <div className="hidden lg:flex items-center bg-blue-600 px-4 py-2 rounded-lg">
+          <div className="hidden lg:flex items-center bg-white-100 px-4 py-2 rounded-lg">
             {socialLinks.map((social, index) => (
               <a
                 key={index}
@@ -82,7 +82,7 @@ const Navbar = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className="text-white p-2 hover:scale-110 transition"
+                className="text-gray p-2 hover:scale-110 transition hover:text-blue-600"
               >
                 <social.icon size={18} />
               </a>
@@ -125,7 +125,7 @@ const Navbar = () => {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-blue-600 hover:text-blue-800"
+                  className="text-blue-100 hover:text-blue-100"
                 >
                   <social.icon size={22} />
                 </a>

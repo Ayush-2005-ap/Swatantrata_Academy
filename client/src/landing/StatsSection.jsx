@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Users, BookOpen, Award, Globe } from 'lucide-react';
+import { Users, BookOpen, Award, Globe, MapPinPlus, Handshake } from 'lucide-react';
 
 const StatsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -9,8 +9,8 @@ const StatsSection = () => {
   const stats = [
     { icon: Users, label: 'Alumni Network', value: 12000, suffix: '+', color: 'text-blue-600' },
     { icon: BookOpen, label: 'Programs Conducted', value: 150, suffix: '+', color: 'text-green-600' },
-    { icon: Globe, label: 'Cities', value: 40, suffix: '+', color: 'text-purple-600' },
-    { icon: Award, label: 'Partnership', value: 25, suffix: '+', color: 'text-orange-600' },
+    { icon: MapPinPlus, label: 'Cities', value: 40, suffix: '+', color: 'text-purple-600' },
+    { icon: Handshake, label: 'Partnership', value: 25, suffix: '+', color: 'text-orange-600' },
   ];
 
   useEffect(() => {
