@@ -19,7 +19,7 @@ const Navbar = () => {
   const navLinks = [
     // { name: "HOME", path: "/" },
     { name: "PROGRAMS", path: "/programs" },
-    { name: "Faculty", path:'/faculty' },
+    { name: "FACULTY", path:'/faculty' },
     { name: "ABOUT US", path: "/about" },
     { name: "CONTACT US", path: "/contact" },
   ];
@@ -58,7 +58,7 @@ const Navbar = () => {
                 className={`text-sm font-semibold tracking-wide relative group ${
                   location.pathname === link.path
                     ? "text-blue-600"
-                    : "text-gray-700 hover:text-blue-600"
+                    : "text-gray-900 hover:text-blue-600"
                 }`}
               >
                 {link.name}

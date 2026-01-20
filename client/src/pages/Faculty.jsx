@@ -60,7 +60,7 @@ const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
                            transition-all duration-500 hover:-translate-y-2"
               >
                 {/* Image */}
-                <div className="relative h-72 overflow-hidden">
+                <div className="relative  h-90 overflow-hidden">
                   <img
                     src={faculty.image}
                     alt={faculty.name}
