@@ -68,7 +68,7 @@ const Programs = () => {
 
   return (
     <div className="pt-20 min-h-screen bg-gray-50">
-      <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 py-20">
+      <div className="bg-gradient-to-br from-blue-800 via-blue-1100 to-blue-900 py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div
             className={`text-center transition-all duration-1000 ${

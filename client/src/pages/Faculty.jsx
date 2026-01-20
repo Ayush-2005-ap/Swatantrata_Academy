@@ -25,11 +25,11 @@ const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
     : facultyData;
 
   return (
-    <div className="pt-20 min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-100">
+    <div className="pt-20 min-h-screen">
 
       {/* Hero */}
-      <div className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 py-24 overflow-hidden">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,white,transparent_60%)]"></div>
+      <div className="relative bg-gradient-to-br from-blue-800 via-blue-1100 to-blue-900 py-10 overflow-hidden">
+        {/* <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,white,transparent_60%)]"></div> */}
 
         <div className="relative max-w-7xl mx-auto px-4 text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
@@ -60,7 +60,10 @@ const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
                            transition-all duration-500 hover:-translate-y-2"
               >
                 {/* Image */}
-                <div className="relative  h-90 overflow-hidden">
+                <div className="relative  h-90 overflow-hidden grayscale
+                      group-hover:grayscale-0
+                      group-hover:scale-110
+                      transition-all duration-500 ease-out">
                   <img
                     src={faculty.image}
                     alt={faculty.name}

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Clock, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import ProgramCard from './ProgramCard';
 
 const ProgramsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -10,7 +10,7 @@ const ProgramsSection = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => entry.isIntersecting && setIsVisible(true),
-      { threshold: 0.1 }
+      { threshold: 0.2 }
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -19,105 +19,63 @@ const ProgramsSection = () => {
 
   const programs = [
     {
-      title: 'Policy Research Fellowship',
-      description:
-        'An intensive research program focused on public policy, governance, and economic reforms.',
-      duration: '6 Months',
-      location: 'New Delhi',
-      image: '/banners/banner1.jpg', // placeholder
+      title: 'iPolicy for Young Leaders',
+      tag: 'Certificate Course',
+      logo: '/Logos/Logos1.png',
     },
     {
-      title: 'Colloquium ',
-      description:
-        'A hands-on leadership journey with mentorship, workshops, and real-world exposure.',
-      duration: '3 Months',
-      location: 'Mumbai',
-      image: '/banners/banner2.jpg',
+      title: 'Colloquium',
+      tag: 'Main Program',
+      logo: '/Logos/Logos2.png',
     },
     {
-      title: 'Public Policy Internship',
-      description:
-        'Work closely with policy experts and think tanks on real policy challenges.',
-      duration: '8 Weeks',
-      location: 'Hybrid',
-      image: '/banners/banner3.jpg',
-    },
-    {
-      title: 'Annual Policy Conference',
-      description:
-        'Connect with policymakers, scholars, and industry leaders from across the country.',
-      duration: '2 Days',
-      location: 'Bengaluru',
-      image: '/assets/programs/conference.jpg',
+      title: 'Austrian Ecomoics Seminar',
+      tag: 'Main Program',
+      logo: '/Logos/Logos3.png',
     },
   ];
 
   return (
-    <section ref={sectionRef} className="py-20 bg-gray-400/50">
+    <section ref={sectionRef} className="py-28 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Heading */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-24">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Our <span className="text-blue-600">Programs & Events</span>
+            Our <span className="text-blue-600">Programs</span>
           </h2>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Carefully curated programs to shape future leaders and thinkers
+            Flagship initiatives designed to shape ideas, leadership, and policy thinking
           </p>
         </div>
 
-        {/* Program Cards */}
-        <div className="space-y-8">
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-24">
           {programs.map((program, index) => (
-            <div
+            <ProgramCard
               key={index}
-              className={`bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500
-                          flex flex-col md:flex-row overflow-hidden transform hover:-translate-y-1
-                          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}
-              style={{ transitionDelay: `${index * 120}ms` }}
-            >
-              {/* Image */}
-              <div className="md:w-1/3 h-56 md:h-auto bg-gray-200">
-                <img
-                  src={program.image}
-                  alt={program.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-
-              {/* Content */}
-              <div className="flex-1 p-8 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">
-                    {program.title}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed mb-6">
-                    {program.description}
-                  </p>
-                </div>
-
-                {/* Meta Info */}
-                <div className="flex items-center gap-6 text-gray-500 text-sm">
-                  <div className="flex items-center gap-2">
-                    <Clock size={16} />
-                    <span>{program.duration}</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <MapPin size={16} />
-                    <span>{program.location}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+              program={program}
+              isVisible={isVisible}
+              delay={index * 180}
+            />
           ))}
         </div>
 
-        {/* View More */}
-        <div className="mt-16 text-center">
+        {/* View All Button */}
+        <div className="text-center">
           <button
             onClick={() => navigate('/programs')}
-            className="px-10 py-3 bg-blue-600 text-white rounded-full text-lg font-semibold
-                       hover:bg-blue-700 transition-all duration-300 shadow-lg hover:scale-105"
+            className="
+              px-16 py-4 rounded-full
+              bg-blue-600 text-white
+              text-lg font-semibold
+              hover:bg-blue-700
+              transition-all duration-300
+              shadow-[0_15px_40px_rgba(47,100,255,0.45)]
+              border-5 border-blue-600
+              hover:scale-105
+              hover:cursor-pointer
+            "
           >
             View All Programs
           </button>

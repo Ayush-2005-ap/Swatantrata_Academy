@@ -68,7 +68,7 @@ const ContactUs = () => {
 
     return (
         <div className="pt-20 min-h-screen bg-gray-50">
-            <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 py-20">
+            <div className="bg-gradient-to-br from-blue-800 via-blue-1100 to-blue-900 py-10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div
                         className={`text-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
@@ -207,7 +207,7 @@ const ContactUs = () => {
                         className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'
                             }`}
                     >
-                        <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-3xl p-8 md:p-10 text-white h-full">
+                        <div className="bg-gradient-to-br from-blue-800 via-blue-1100 to-blue-900 rounded-3xl p-8 md:p-10 text-white h-full">
                             <h2 className="text-3xl font-bold mb-6">
                                 Let's Connect
                             </h2>
