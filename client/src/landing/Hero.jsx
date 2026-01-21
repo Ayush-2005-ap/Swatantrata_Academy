@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 const banners = [
-  "/banners/banner1.jpg",
+  "/banners/banner1.png",
   "/banners/banner2.jpg",
   "/banners/banner3.jpg",
 ];
@@ -39,7 +39,7 @@ const Hero = () => {
   return (
     <section className="w-full py-16 bg-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative h-[70vh] rounded-2xl overflow-hidden shadow-2xl bg-gray-200">
+        <div className="relative h-[60vh] rounded-2xl overflow-hidden shadow-2xl bg-gray-200">
           
           {loaded && (
             <img

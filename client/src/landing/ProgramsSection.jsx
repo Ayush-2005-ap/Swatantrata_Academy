@@ -66,13 +66,12 @@ const ProgramsSection = () => {
           <button
             onClick={() => navigate('/programs')}
             className="
-              px-16 py-4 rounded-full
-              bg-blue-600 text-white
-              text-lg font-semibold
-              hover:bg-blue-700
-              transition-all duration-300
-              shadow-[0_15px_40px_rgba(47,100,255,0.45)]
-              border-5 border-blue-600
+            inline-flex items-center gap-2
+            px-8 py-4 rounded-xl
+            bg-blue-600 text-white font-semibold
+            hover:bg-blue-700
+            transition-all duration-300
+            shadow-lg hover:shadow-xl
               hover:scale-105
               hover:cursor-pointer
             "

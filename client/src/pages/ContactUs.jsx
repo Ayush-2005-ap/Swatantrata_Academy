@@ -32,15 +32,15 @@ const ContactUs = () => {
         {
             icon: Mail,
             title: 'Email Us',
-            details: 'info@swatantracademy.org',
-            subdetails: 'admissions@swatantracademy.org',
+            details: 'swatantracademy@gmail.com',
+            subdetails: 'academyswatantra@gmail.com',
             color: 'from-blue-500 to-cyan-500',
         },
         {
             icon: Phone,
             title: 'Call Us',
-            details: '+91 (011) 4560-0000',
-            subdetails: '+91 (011) 4560-0001',
+            details: '+91 7428647056',
+            subdetails: '+91 7428647056',
             color: 'from-green-500 to-teal-500',
         },
         {

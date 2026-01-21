@@ -8,7 +8,7 @@ const AboutHero = () => {
   }, []);
 
   return (
-    <div className="bg-gradient-to-br from-blue-800 via-blue-1100 to-blue-900 py-10">
+    <div className="bg-linear-to-br from-blue-800 via-blue-1100 to-blue-900 py-10">
       <div className="max-w-7xl mx-auto px-4 text-center">
         <div
           className={`transition-all duration-1000 ${
