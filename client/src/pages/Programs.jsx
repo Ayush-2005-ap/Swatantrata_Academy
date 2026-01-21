@@ -22,9 +22,9 @@ const Programs = () => {
   const programs = [
     {
       icon: BookOpen,
-      title: 'Policy Research Fellowship',
-      duration: '6-12 months',
-      location: 'New Delhi',
+      title: 'iPolicy for Young Leaders',
+      duration: '2-3 Days',
+      location: 'TBD',
       description:
         'Engage in cutting-edge research on liberal economic policies and governance. Work alongside renowned scholars and contribute to policy papers.',
       features: ['Research Stipend', 'Mentorship', 'Publication Support', 'Networking Events'],
@@ -33,8 +33,8 @@ const Programs = () => {
     },
     {
       icon: Users,
-      title: 'Leadership Development Program',
-      duration: '3 months',
+      title: 'Colloquium',
+      duration: '3 Days',
       location: 'Multiple Cities',
       description:
         'Develop leadership skills through intensive workshops and mentorship. Learn from successful policy leaders and change-makers.',
@@ -44,9 +44,9 @@ const Programs = () => {
     },
     {
       icon: Award,
-      title: 'Young Scholars Program',
-      duration: '1 year',
-      location: 'New Delhi',
+      title: 'AES',
+      duration: '1-2 Days',
+      location: 'Online',
       description:
         'Competitive program for outstanding individuals committed to change. Full scholarship with comprehensive training.',
       features: ['Full Scholarship', 'Research Training', 'International Exposure', 'Career Guidance'],
@@ -55,29 +55,29 @@ const Programs = () => {
     },
     {
       icon: Briefcase,
-      title: 'Summer Internship',
+      title: 'ePolicy for Young Leaders',
       duration: '2-3 months',
       location: 'New Delhi',
       description:
         'Hands-on experience in policy analysis and advocacy. Perfect for students looking to explore policy careers.',
       features: ['Project Work', 'Skill Development', 'Certificate', 'Stipend'],
       color: 'from-green-500 to-teal-500',
-      logo: '/Logos/Logos4.png',
+      logo: '/Logos/Logos5.png',
     },
     {
       icon: Calendar,
-      title: 'Policy Bootcamp',
+      title: 'Policy Camp',
       duration: '2 weeks',
       location: 'Various',
       description:
         'Intensive training program covering policy fundamentals, research methods, and advocacy strategies.',
       features: ['Intensive Training', 'Expert Sessions', 'Group Projects', 'Certification'],
       color: 'from-indigo-500 to-purple-500',
-      logo: '/Logos/Logos5.png',
+      logo: '/Logos/Logos4.png',
     },
     {
       icon: TrendingUp,
-      title: 'Executive Education',
+      title: 'MOOC',
       duration: '1 month',
       location: 'New Delhi',
       description:
@@ -88,7 +88,7 @@ const Programs = () => {
     },
     {
       icon: Users,
-      title: 'Community Engagement Program',
+      title: 'Master Class',
       duration: 'Ongoing',
       location: 'Various Locations',
       description:
@@ -99,7 +99,7 @@ const Programs = () => {
     },
     {
       icon: BookOpen,
-      title: 'Online Policy Courses',
+      title: 'Credit Courses',
       duration: 'Self-paced',
       location: 'Online',
       description:
@@ -148,7 +148,7 @@ const Programs = () => {
               <div className="p-8">
                 {/* ✅ PROGRAM LOGO SECTION (NEW) */}
                 <div className="mb-6">
-                  <div className="w-full h-24 rounded-xl border border-gray-200 bg-gray-50
+                  <div className="w-full h-24 rounded-xl 
                                   flex items-center justify-center
                                   shadow-inner">
                     <img
@@ -218,7 +218,7 @@ const Programs = () => {
                              transition-all duration-300
                              flex items-center justify-center space-x-2"
                 >
-                  <span>Apply Now</span>
+                  <span>View More</span>
                   <ArrowRight
                     className="group-hover/btn:translate-x-1 transition-transform duration-300"
                     size={18}

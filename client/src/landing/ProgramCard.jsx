@@ -19,9 +19,7 @@ const ProgramCard = ({ program, isVisible, delay }) => {
         <div
           className="
             w-full h-36 mb-10 rounded-2xl
-            bg-gradient-to-br from-gray-100 to-gray-200
             flex items-center justify-center
-            shadow-inner
             overflow-hidden
           "
         >
