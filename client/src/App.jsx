@@ -8,6 +8,8 @@ import ContactUs from './pages/ContactUs';
 import Footer from './components/Footer';
 import ChatBot from './chatbot/ChatBot';
 import Faculty from './pages/Faculty';
+import ProgramDetail from "./programs/pages/ProgramDetail";
+import EventDetail from "./programs/pages/EventDetail";
 
 function App() {
   return (
@@ -17,6 +19,11 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/programs" element={<Programs />} />
+          <Route path="/programs/:programId" element={<ProgramDetail />} />
+          <Route
+            path="/programs/:programId/events/:eventId"
+            element={<EventDetail />}
+          />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
           <Route path="/faculty" element={<Faculty />} />

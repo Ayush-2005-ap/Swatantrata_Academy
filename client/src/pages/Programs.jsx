@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   BookOpen,
   Users,
@@ -13,6 +14,7 @@ import {
 
 const Programs = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsVisible(true);
@@ -21,6 +23,7 @@ const Programs = () => {
 
   const programs = [
     {
+      id: 'ipolicy-young-leaders',
       icon: BookOpen,
       title: 'iPolicy for Young Leaders',
       duration: '2-3 Days',
@@ -29,9 +32,10 @@ const Programs = () => {
         'Engage in cutting-edge research on liberal economic policies and governance. Work alongside renowned scholars and contribute to policy papers.',
       features: ['Research Stipend', 'Mentorship', 'Publication Support', 'Networking Events'],
       color: 'from-blue-500 to-cyan-500',
-      logo: '/Logos/Logos1.png', // ✅ ADD YOUR LOGO HERE
+      logo: '/Logos/Logos1.png',
     },
     {
+      id: 'colloquium',
       icon: Users,
       title: 'Colloquium',
       duration: '3 Days',
@@ -43,6 +47,7 @@ const Programs = () => {
       logo: '/Logos/Logos2.png',
     },
     {
+      id: 'aes',
       icon: Award,
       title: 'AES',
       duration: '1-2 Days',
@@ -54,6 +59,7 @@ const Programs = () => {
       logo: '/Logos/Logos3.png',
     },
     {
+      id: 'epolicy-young-leaders',
       icon: Briefcase,
       title: 'ePolicy for Young Leaders',
       duration: '2-3 months',
@@ -65,6 +71,7 @@ const Programs = () => {
       logo: '/Logos/Logos5.png',
     },
     {
+      id: 'policy-camp',
       icon: Calendar,
       title: 'Policy Camp',
       duration: '2 weeks',
@@ -76,6 +83,7 @@ const Programs = () => {
       logo: '/Logos/Logos4.png',
     },
     {
+      id: 'mooc',
       icon: TrendingUp,
       title: 'MOOC',
       duration: '1 month',
@@ -87,6 +95,7 @@ const Programs = () => {
       logo: '/Logos/Logos6.png',
     },
     {
+      id: 'master-class',
       icon: Users,
       title: 'Master Class',
       duration: 'Ongoing',
@@ -98,6 +107,7 @@ const Programs = () => {
       logo: '/Logos/Logos7.png',
     },
     {
+      id: 'credit-courses',
       icon: BookOpen,
       title: 'Credit Courses',
       duration: 'Self-paced',
@@ -136,7 +146,7 @@ const Programs = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {programs.map((program, index) => (
             <div
-              key={index}
+              key={program.id}
               className={`group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500
                 transform hover:-translate-y-2 overflow-hidden
                 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
@@ -146,11 +156,9 @@ const Programs = () => {
               <div className={`h-2 bg-gradient-to-r ${program.color}`} />
 
               <div className="p-8">
-                {/* ✅ PROGRAM LOGO SECTION (NEW) */}
+                {/* Logo */}
                 <div className="mb-6">
-                  <div className="w-full h-24 rounded-xl 
-                                  flex items-center justify-center
-                                  shadow-inner">
+                  <div className="w-full h-24 rounded-xl flex items-center justify-center shadow-inner">
                     <img
                       src={program.logo}
                       alt={`${program.title} logo`}
@@ -158,17 +166,6 @@ const Programs = () => {
                     />
                   </div>
                 </div>
-
-                {/* Icon */}
-                {/* <div className="flex items-start justify-between mb-6">
-                  <div
-                    className={`w-16 h-16 bg-gradient-to-br ${program.color}
-                      rounded-xl flex items-center justify-center
-                      transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}
-                  >
-                    <program.icon className="text-white" size={32} />
-                  </div>
-                </div> */}
 
                 {/* Title */}
                 <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300">
@@ -212,6 +209,7 @@ const Programs = () => {
 
                 {/* CTA */}
                 <button
+                  onClick={() => navigate(`/programs/${program.id}`)}
                   className="group/btn w-full bg-gradient-to-r from-blue-600 to-blue-700
                              text-white px-6 py-3 rounded-lg font-semibold
                              hover:from-blue-700 hover:to-blue-800
