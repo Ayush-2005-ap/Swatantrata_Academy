@@ -216,7 +216,7 @@ const Programs = () => {
                              text-white px-6 py-3 rounded-lg font-semibold
                              hover:from-blue-700 hover:to-blue-800
                              transition-all duration-300
-                             flex items-center justify-center space-x-2"
+                             flex items-center justify-center space-x-2 hover:cursor-pointer"
                 >
                   <span>View More</span>
                   <ArrowRight
