@@ -102,7 +102,7 @@ const ProgramDetail = () => {
         <div className="max-w-6xl mx-auto px-4 text-white">
           <button
             onClick={() => navigate('/programs')}
-            className="flex items-center space-x-2 mb-6 text-blue-200 hover:text-white"
+            className="flex items-center space-x-2 mb-6 hover:cursor-pointer text-blue-200 hover:text-white"
           >
             <ArrowLeft size={18} />
             <span>Back to Programs</span>
@@ -147,7 +147,7 @@ const ProgramDetail = () => {
                   onClick={() =>
                     navigate(`/programs/${programId}/events/${event.id}`)
                   }
-                  className="inline-flex items-center space-x-2 text-blue-600 font-semibold hover:text-blue-800"
+                  className="inline-flex hover:cursor-pointer items-center space-x-2 text-blue-600 font-semibold hover:text-blue-800"
                 >
                   <span>View Event Details</span>
                   <ArrowRight size={16} />
