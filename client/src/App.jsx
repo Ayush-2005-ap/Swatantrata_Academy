@@ -10,11 +10,18 @@ import ChatBot from './chatbot/ChatBot';
 import Faculty from './pages/Faculty';
 import ProgramDetail from "./programs/pages/ProgramDetail";
 import EventDetail from "./programs/pages/EventDetail";
-
+import Snowfall from 'react-snowfall';
 function App() {
   return (
     <Router>
-      <div className="min-h-screen">
+      <div className="min-h-screen relative">
+        <Snowfall color='#2657F5' style={{
+          position: "fixed",
+          width: "100vw",
+          height: "100vh",
+          zIndex: 9999,
+          pointerEvents: "none"
+        }} />
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />

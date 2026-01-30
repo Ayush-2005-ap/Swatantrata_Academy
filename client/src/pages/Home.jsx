@@ -4,6 +4,7 @@ import StatsSection from '../landing/StatsSection';
 import TestimonialsSection from '../landing/TestimonialsSection';
 import CTASection from '../landing/CTASection';
 import FeaturedFaculty from '../landing/FeaturedFaculty';
+import Snowfall from 'react-snowfall';
 // import Faculty from './Faculty';
 
 const Home = () => {
