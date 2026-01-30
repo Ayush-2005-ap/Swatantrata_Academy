@@ -23,10 +23,28 @@ const ContactUs = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-    };
+      
+        try {
+          const res = await fetch("http://localhost:5050/api/contact", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(
+              (formData),
+            ),
+          });
+      
+          const data = await res.json();
+      
+          alert(data.message);
+        } catch (error) {
+          alert("Something went wrong");
+        }
+      };
+      
 
     const contactInfo = [
         {

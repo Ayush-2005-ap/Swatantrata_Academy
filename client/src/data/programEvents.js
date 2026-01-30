@@ -2,7 +2,7 @@ export const programEvents = [
     {
       id: "yls-2024",
       programId: "leadership",
-      title: "Youth Leadership Summit 2024",
+      title: "iPolicy Youth Leadership Summit 2024",
       date: "March 2024",
       about:
         "A national summit focused on leadership, ethics, and nation-building.",

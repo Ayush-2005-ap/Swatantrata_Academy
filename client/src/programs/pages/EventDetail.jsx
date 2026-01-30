@@ -12,8 +12,8 @@ const programEvents = [
   {
     id: 'yls-2024',
     programId: 'ipolicy-young-leaders',
-    title: 'Youth Leadership Summit 2024',
-    date: 'March 2024',
+    title: 'iPolicy Youth Leadership 2025',
+    date: 'August 2025',
     about:
       'The Youth Leadership Summit 2024 brought together young leaders from across the country to discuss governance, ethics, and leadership. The event featured panel discussions, workshops, and interactive sessions led by experienced policymakers and scholars.',
 
