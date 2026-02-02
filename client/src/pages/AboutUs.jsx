@@ -4,6 +4,7 @@ import AboutIntro from '../about/AboutIntro';
 import AboutValues from '../about/AboutValues';
 import AboutStats from '../about/AboutStats';
 import AboutTeam from '../about/AboutTeam';
+import AboutFaq from '../about/Aboutfaq';
 
 const About = () => {
   useEffect(() => {
@@ -17,6 +18,7 @@ const About = () => {
       <AboutValues />
       {/* <AboutStats /> */}
       <AboutTeam />
+      <AboutFaq />
     </div>
   );
 };
