@@ -40,7 +40,7 @@ const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
 
       {/* Faculty Grid */}
       <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-5 gap-y-12">
           {displayedFaculty.map((faculty, index) => (
             <div
               key={faculty.id}
@@ -66,21 +66,21 @@ const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
                 {/* Content */}
                 <div className="space-y-2">
                   <div className="flex items-start justify-between gap-2">
-                    <h3 className="text-xl font-bold text-gray-900 tracking-tight flex-1"
+                    <h3 className="text-base font-bold text-gray-900 tracking-tight flex-1"
                       style={{ fontFamily: 'Georgia, serif' }}>
                       {faculty.name}
                     </h3>
                     <button
                       onClick={() => openLinkedIn(faculty.linkedIn)}
-                      className="text-blue-600 hover:text-blue-800 transition-colors flex-shrink-0 mt-1"
+                      className="text-blue-600 hover:text-blue-800 transition-colors flex-shrink-0 mt-0.5"
                       aria-label="LinkedIn Profile"
                     >
-                      <Linkedin size={18} />
+                      <Linkedin size={16} />
                     </button>
                   </div>
 
-                  <p className="text-sm text-gray-600 leading-relaxed uppercase tracking-wide"
-                    style={{ fontSize: '0.75rem', letterSpacing: '0.05em' }}>
+                  <p className="text-xs text-gray-600 leading-relaxed uppercase tracking-wide"
+                    style={{ fontSize: '0.7rem', letterSpacing: '0.05em' }}>
                     {faculty.title}
                   </p>
                 </div>
