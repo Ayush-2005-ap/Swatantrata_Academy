@@ -1,12 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Linkedin, ExternalLink } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
 import { facultyData } from '../data/faculty.js';
 
-/**
- * Props:
- * - showFeaturedOnly (boolean) → true = show only pinned faculty
- * - limit (number) → max number of faculty to show
- */
 const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
   const [isVisible, setIsVisible] = useState(false);
 
@@ -19,94 +14,75 @@ const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
-  // ✅ NEW LOGIC (ONLY ADDITION)
   const displayedFaculty = showFeaturedOnly
     ? facultyData.filter(f => f.featured).slice(0, limit || 6)
     : facultyData;
 
   return (
-    <div className="pt-20 min-h-screen">
+    <div className="pt-20 min-h-screen bg-white">
 
-      {/* Hero */}
-      <div className="relative bg-gradient-to-br from-blue-800 via-blue-1100 to-blue-900 py-10 overflow-hidden">
-        {/* <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,white,transparent_60%)]"></div> */}
+      {/* Hero Section */}
+      <div className="bg-linear-to-br from-blue-800 via-blue-1100 to-blue-900 py-10">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+            }`}>
+            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6"
+              style={{ fontFamily: 'Georgia, serif' }}>
+              POLICY SCHOLARS
+            </h1>
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              Distinguished policy experts, researchers, and thought leaders shaping ideas that matter
+            </p>
+          </div>
 
-        <div className="relative max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Our Faculty
-          </h1>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-            Distinguished policy experts, researchers, and thought leaders shaping ideas that matter
-          </p>
         </div>
       </div>
 
       {/* Faculty Grid */}
-      <div className="max-w-7xl mx-auto px-4 py-24">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+      <div className="max-w-7xl mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
           {displayedFaculty.map((faculty, index) => (
             <div
               key={faculty.id}
-              className={`transition-all duration-700 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-              }`}
+              className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
               style={{ transitionDelay: `${index * 100}ms` }}
             >
-              <div
-                onClick={() => openLinkedIn(faculty.linkedIn)}
-                className="group relative bg-white rounded-3xl overflow-hidden cursor-pointer
-                           shadow-[0_10px_30px_rgba(0,0,0,0.08)]
-                           hover:shadow-[0_20px_60px_rgba(37,99,235,0.25)]
-                           transition-all duration-500 hover:-translate-y-2"
-              >
-                {/* Image */}
-                <div className="relative  h-90 overflow-hidden grayscale
-                      group-hover:grayscale-0
-                      group-hover:scale-110
-                      transition-all duration-500 ease-out">
+              <div className="group cursor-pointer">
+
+                {/* Image Container - Square */}
+                <div className="relative mb-5 overflow-hidden bg-gray-100 aspect-square 
+                                transition-all duration-300
+                                group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)]
+                                group-hover:-translate-y-1">
                   <img
                     src={faculty.image}
                     alt={faculty.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover object-center grayscale group-hover:grayscale-0 
+                               transition-all duration-500"
                   />
-
-                  {/* Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-
-                  {/* LinkedIn Hover */}
-                  <div className="absolute bottom-4 left-4 flex items-center gap-2 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <Linkedin size={18} />
-                    <span className="text-sm font-semibold">View LinkedIn</span>
-                  </div>
                 </div>
 
                 {/* Content */}
-                <div className="p-7">
-                  <span className="inline-block mb-3 px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">
-                    Faculty Member
-                  </span>
+                <div className="space-y-2">
+                  <div className="flex items-start justify-between gap-2">
+                    <h3 className="text-xl font-bold text-gray-900 tracking-tight flex-1"
+                      style={{ fontFamily: 'Georgia, serif' }}>
+                      {faculty.name}
+                    </h3>
+                    <button
+                      onClick={() => openLinkedIn(faculty.linkedIn)}
+                      className="text-blue-600 hover:text-blue-800 transition-colors flex-shrink-0 mt-1"
+                      aria-label="LinkedIn Profile"
+                    >
+                      <Linkedin size={18} />
+                    </button>
+                  </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
-                    {faculty.name}
-                  </h3>
-
-                  <p className="text-sm font-semibold text-blue-600 mb-4">
+                  <p className="text-sm text-gray-600 leading-relaxed uppercase tracking-wide"
+                    style={{ fontSize: '0.75rem', letterSpacing: '0.05em' }}>
                     {faculty.title}
                   </p>
-
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openLinkedIn(faculty.linkedIn);
-                    }}
-                    className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white
-                               py-3 rounded-xl font-semibold flex items-center justify-center gap-2
-                               hover:from-blue-700 hover:to-blue-800 transition-all"
-                  >
-                    <Linkedin size={18} />
-                    Connect
-                    <ExternalLink size={16} />
-                  </button>
                 </div>
               </div>
             </div>

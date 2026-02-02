@@ -15,13 +15,13 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen relative">
-        <Snowfall color='#2657F5' style={{
+        {/* <Snowfall color='#2657F5' style={{
           position: "fixed",
           width: "100vw",
           height: "100vh",
           zIndex: 9999,
           pointerEvents: "none"
-        }} />
+        }} /> */}
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -33,7 +33,7 @@ function App() {
           />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/contact" element={<ContactUs />} />
-          <Route path="/faculty" element={<Faculty />} />
+          <Route path="/faculty" element={<Faculty />} />   
         </Routes>
         <ChatBot />
         <Footer />
