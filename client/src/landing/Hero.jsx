@@ -37,19 +37,37 @@ const Hero = () => {
   }, [loaded]);
 
   return (
-    <section className="w-full py-16 bg-gray-100">
+    <section className="w-full bg-gray-100 py-8 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="relative h-[60vh] rounded-2xl overflow-hidden shadow-2xl bg-gray-200">
-          
+
+        {/* Aspect-ratio based container */}
+        <div
+          className="
+            relative w-full
+            aspect-[4/5]        /* Mobile */
+            sm:aspect-[16/9]    /* Tablet */
+            lg:aspect-[21/9]    /* Desktop */
+            bg-white
+            rounded-2xl
+            overflow-hidden
+            shadow-2xl
+            flex items-center justify-center
+          "
+        >
           {loaded && (
             <img
               src={banners[current]}
               alt={`Banner ${current + 1}`}
-              className="w-full h-full object-cover"
+              className="
+                w-full h-full
+                object-contain
+                transition-opacity
+                duration-700
+              "
             />
           )}
-
         </div>
+
       </div>
     </section>
   );

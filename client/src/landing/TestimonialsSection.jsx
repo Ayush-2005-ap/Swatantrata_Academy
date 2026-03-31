@@ -66,7 +66,7 @@ const TestimonialsSection = () => {
   return (
     <section 
       ref={sectionRef} 
-      className="min-h-screen py-20 bg-white flex items-center"
+      className="min-h-screen py-5 bg-white flex items-center"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         {/* Header */}

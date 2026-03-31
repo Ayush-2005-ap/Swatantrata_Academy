@@ -25,7 +25,7 @@ const Navbar = () => {
   ];
 
   const socialLinks = [
-    { icon: Youtube, url: "#", label: "YouTube" },
+    { icon: Youtube, url: "#", label: "LinkedIn" },
     { icon: Instagram, url: "#", label: "Instagram" },
     { icon: Facebook, url: "#", label: "Facebook" },
     { icon: Twitter, url: "#", label: "Twitter" },
