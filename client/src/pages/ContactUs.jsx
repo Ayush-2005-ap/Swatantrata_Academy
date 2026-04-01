@@ -276,7 +276,7 @@ const ContactUs = () => {
                                     <div className="w-full h-64 md:h-72 rounded-lg overflow-hidden shadow">
                                         <iframe
                                             className="w-full h-full border-0"
-                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3267.2610125681595!2d77.20840437520192!3d28.553298975708117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce2134f81ff19%3A0x6053802de1118894!2sCentre%20for%20Civil%20Society!5e1!3m2!1sen!2sin!4v1767329689941!5m2!1sen!2sin"
+                                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3687.076088606321!2d77.20845547569827!3d28.553315675708113!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390ce2134fddd313%3A0x8323cb157517d0d6!2sSwatantra%20Academy!5e1!3m2!1sen!2sin!4v1775027202829!5m2!1sen!2sin" 
                                             loading="lazy"
                                             referrerPolicy="no-referrer-when-downgrade"
                                         ></iframe>
