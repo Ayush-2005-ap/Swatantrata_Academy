@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import {
   BookOpen,
   Users,
@@ -13,11 +14,9 @@ import {
 } from 'lucide-react';
 
 const Programs = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setIsVisible(true);
     window.scrollTo(0, 0);
   }, []);
 
@@ -25,12 +24,11 @@ const Programs = () => {
     {
       id: 'ipolicy-young-leaders',
       icon: BookOpen,
-      title: 'iPolicy for Young Leaders',
+      title: 'iPolicy ',
       duration: '2-3 Days',
       location: 'TBD',
-      description:
-        'Engage in cutting-edge research on liberal economic policies and governance. Work alongside renowned scholars and contribute to policy papers.',
-      features: ['Research Stipend', 'Mentorship', 'Publication Support', 'Networking Events'],
+      description: 'Engage in cutting-edge research on liberal economic policies and governance.',
+      features: ['Stipend', 'Mentorship'],
       color: 'from-blue-500 to-cyan-500',
       logo: '/Logos/Logos1.png',
     },
@@ -40,10 +38,9 @@ const Programs = () => {
       title: 'Colloquium',
       duration: '3 Days',
       location: 'Multiple Cities',
-      description:
-        'Develop leadership skills through intensive workshops and mentorship. Learn from successful policy leaders and change-makers.',
-      features: ['Workshop Series', 'One-on-One Mentoring', 'Case Studies', 'Leadership Projects'],
-      color: 'from-purple-500 to-pink-500',
+      description: 'Develop leadership skills through workshops. Learn from accomplished change-makers.',
+      features: ['Workshops', 'Mentoring'],
+      color: 'from-blue-600 to-indigo-500',
       logo: '/Logos/Logos2.png',
     },
     {
@@ -52,22 +49,20 @@ const Programs = () => {
       title: 'AES',
       duration: '1-2 Days',
       location: 'Online',
-      description:
-        'Competitive program for outstanding individuals committed to change. Full scholarship with comprehensive training.',
-      features: ['Full Scholarship', 'Research Training', 'International Exposure', 'Career Guidance'],
-      color: 'from-orange-500 to-red-500',
+      description: 'Competitive program for outstanding individuals committed to change and excellence.',
+      features: ['Scholarship', 'Training'],
+      color: 'from-sky-500 to-blue-600',
       logo: '/Logos/Logos3.png',
     },
     {
       id: 'epolicy-young-leaders',
       icon: Briefcase,
-      title: 'ePolicy for Young Leaders',
+      title: 'ePolicy',
       duration: '2-3 months',
       location: 'New Delhi',
-      description:
-        'Hands-on experience in policy analysis and advocacy. Perfect for students looking to explore policy careers.',
-      features: ['Project Work', 'Skill Development', 'Certificate', 'Stipend'],
-      color: 'from-green-500 to-teal-500',
+      description: 'Hands-on experience in policy analysis and advocacy. Perfect for student careers.',
+      features: ['Project Work', 'Certificate'],
+      color: 'from-indigo-500 to-blue-700',
       logo: '/Logos/Logos5.png',
     },
     {
@@ -76,10 +71,9 @@ const Programs = () => {
       title: 'Policy Camp',
       duration: '2 weeks',
       location: 'Various',
-      description:
-        'Intensive training program covering policy fundamentals, research methods, and advocacy strategies.',
-      features: ['Intensive Training', 'Expert Sessions', 'Group Projects', 'Certification'],
-      color: 'from-indigo-500 to-purple-500',
+      description: 'Intensive training program covering policy fundamentals and advocacy strategies.',
+      features: ['Expert Sessions', 'Projects'],
+      color: 'from-blue-400 to-cyan-600',
       logo: '/Logos/Logos4.png',
     },
     {
@@ -88,10 +82,9 @@ const Programs = () => {
       title: 'MOOC',
       duration: '1 month',
       location: 'New Delhi',
-      description:
-        'Advanced program for mid-career professionals seeking to deepen their policy expertise and leadership capabilities.',
-      features: ['Executive Coaching', 'Peer Learning', 'Network Building', 'Strategic Thinking'],
-      color: 'from-pink-500 to-rose-500',
+      description: 'Advanced program for professionals seeking to deepen policy expertise.',
+      features: ['Coaching', 'Network Building'],
+      color: 'from-sky-500 to-indigo-500',
       logo: '/Logos/Logos6.png',
     },
     {
@@ -100,10 +93,9 @@ const Programs = () => {
       title: 'Master Class',
       duration: 'Ongoing',
       location: 'Various Locations',
-      description:
-        'Engage with local communities to understand grassroots issues and develop inclusive policy solutions.',
-      features: ['Field Visits', 'Workshops', 'Community Projects', 'Impact Assessment'],
-      color: 'from-yellow-500 to-amber-500',
+      description: 'Engage with communities to understand grassroots issues and develop solutions.',
+      features: ['Field Visits', 'Assessment'],
+      color: 'from-blue-500 to-sky-400',
       logo: '/Logos/Logos7.png',
     },
     {
@@ -112,118 +104,109 @@ const Programs = () => {
       title: 'Credit Courses',
       duration: 'Self-paced',
       location: 'Online',
-      description:
-        'Flexible online courses covering various aspects of public policy, economics, and governance.',
-      features: ['Flexible Learning', 'Expert Instructors', 'Certification', 'Community Access'],
-      color: 'from-cyan-500 to-blue-500',
+      description: 'Flexible online courses covering various aspects of public policy and economics.',
+      features: ['Flexible Learning', 'Certification'],
+      color: 'from-indigo-600 to-blue-500',
       logo: '/Logos/Logos8.png',
     },
   ];
 
   return (
-    <div className="pt-20 min-h-screen bg-gray-50">
-      {/* Hero */}
-      <div className="bg-gradient-to-br from-blue-800 via-blue-900 to-blue-900 py-10">
-        <div className="max-w-7xl mx-auto px-4">
-          <div
-            className={`text-center transition-all duration-1000 ${
-              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}
+    <div className="pt-20 min-h-screen bg-slate-50">
+      
+      {/* Hero Section */}
+      <div className="relative bg-gradient-to-br from-blue-800 via-blue-1100 to-blue-900 py-16 overflow-hidden">
+        {/* Subtle background wave for premium feel */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <svg className="absolute bottom-0 w-full" viewBox="0 0 1440 100" preserveAspectRatio="none">
+             <path fill="#ffffff" d="M0,100 L1440,100 L1440,50 Q1080,100 720,50 T0,50 Z"></path>
+          </svg>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 text-center relative z-10 w-full">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+            <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-6" style={{ fontFamily: 'Georgia, serif' }}>
               Our Programs
             </h1>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-              Choose from our diverse range of programs designed to nurture critical thinking,
-              leadership, and policy expertise
+            <p className="text-lg md:text-xl text-blue-100 max-w-3xl mx-auto font-light leading-relaxed">
+              Choose from our diverse range of rapid-immersion programs designed to nurture critical thinking, leadership, and policy expertise.
             </p>
-          </div>
+          </motion.div>
         </div>
       </div>
 
-      {/* Programs Grid */}
-      <div className="max-w-7xl mx-auto px-4 py-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      {/* Programs Grid - Now Compact & Dense */}
+      <div className="max-w-7xl mx-auto px-4 py-16 pb-32">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {programs.map((program, index) => (
-            <div
+            <motion.div
               key={program.id}
-              className={`group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500
-                transform hover:-translate-y-2 overflow-hidden
-                ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-              style={{ transitionDelay: `${index * 100}ms` }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "0px 0px -50px 0px" }}
+              transition={{ duration: 0.6, delay: (index % 4) * 0.1, type: "spring", stiffness: 60 }}
+              className="group relative bg-white rounded-2xl border border-gray-100 shadow-[0_8px_30px_rgba(0,0,0,0.04)] hover:shadow-2xl transition-all duration-300 ease-out flex flex-col justify-between overflow-hidden"
             >
-              {/* Top Color Strip */}
-              <div className={`h-2 bg-gradient-to-r ${program.color}`} />
+              {/* Premium Top Gradient Line */}
+              <div className={`absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r ${program.color} opacity-80 group-hover:h-[4px] group-hover:opacity-100 transition-all duration-300`} />
 
-              <div className="p-8">
-                {/* Logo */}
-                <div className="mb-6">
-                  <div className="w-full h-24 rounded-xl flex items-center justify-center shadow-inner">
+              <div className="p-6 flex-1 flex flex-col">
+                {/* Logo Area - Compacted */}
+                <div className="mb-4">
+                  <div className="w-full h-16 rounded-xl flex items-center justify-start">
                     <img
                       src={program.logo}
                       alt={`${program.title} logo`}
-                      className="max-h-24 object-contain"
+                      className="max-h-12 object-contain transition-all duration-500 group-hover:scale-105"
                     />
                   </div>
                 </div>
 
                 {/* Title */}
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-blue-600 transition-colors duration-300">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-700 transition-colors duration-300 tracking-tight" style={{ fontFamily: 'Georgia, serif' }}>
                   {program.title}
                 </h3>
 
-                {/* Meta */}
-                <div className="flex items-center space-x-4 mb-4 text-sm text-gray-600">
-                  <div className="flex items-center space-x-1">
-                    <Clock size={16} />
+                {/* Meta Chips */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <div className="flex items-center space-x-1 bg-slate-100 text-slate-600 px-2 py-1 rounded-md text-xs font-semibold">
+                    <Clock size={12} className="text-blue-500" />
                     <span>{program.duration}</span>
                   </div>
-                  <div className="flex items-center space-x-1">
-                    <MapPin size={16} />
+                  <div className="flex items-center space-x-1 bg-slate-100 text-slate-600 px-2 py-1 rounded-md text-xs font-semibold">
+                    <MapPin size={12} className="text-blue-500" />
                     <span>{program.location}</span>
                   </div>
                 </div>
 
                 {/* Description */}
-                <p className="text-gray-600 leading-relaxed mb-6">
+                <p className="text-gray-500 text-sm leading-relaxed mb-6 flex-1">
                   {program.description}
                 </p>
 
-                {/* Highlights */}
-                <div className="mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-3">
-                    Program Highlights:
-                  </h4>
-                  <div className="grid grid-cols-2 gap-2">
-                    {program.features.map((feature, idx) => (
-                      <div
-                        key={idx}
-                        className="flex items-center space-x-2 text-sm text-gray-600"
-                      >
-                        <div className="w-1.5 h-1.5 bg-blue-600 rounded-full" />
-                        <span>{feature}</span>
-                      </div>
-                    ))}
-                  </div>
+                {/* Highlights Filtered for Compactness */}
+                <div className="mb-6 flex flex-wrap gap-2">
+                  {program.features.map((feature, idx) => (
+                    <span key={idx} className="inline-flex items-center px-2 py-0.5 rounded text-[0.65rem] font-medium bg-blue-50 text-blue-700 border border-blue-100">
+                      {feature}
+                    </span>
+                  ))}
                 </div>
 
-                {/* CTA */}
+                {/* CTA Button */}
                 <button
                   onClick={() => navigate(`/programs/${program.id}`)}
-                  className="group/btn w-full bg-gradient-to-r from-blue-600 to-blue-700
-                             text-white px-6 py-3 rounded-lg font-semibold
-                             hover:from-blue-700 hover:to-blue-800
-                             transition-all duration-300
-                             flex items-center justify-center space-x-2 hover:cursor-pointer"
+                  className="group/btn w-full bg-slate-50 border border-slate-200 text-slate-700 px-4 py-2.5 rounded-lg text-sm font-semibold hover:bg-gradient-to-r hover:from-blue-600 hover:to-blue-800 hover:text-white hover:border-transparent hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
                 >
-                  <span>View More</span>
-                  <ArrowRight
-                    className="group-hover/btn:translate-x-1 transition-transform duration-300"
-                    size={18}
-                  />
+                  <span>View Details</span>
+                  <ArrowRight className="group-hover/btn:translate-x-1 transition-transform duration-300" size={16} />
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
