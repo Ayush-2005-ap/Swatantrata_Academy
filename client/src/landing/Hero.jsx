@@ -9,8 +9,8 @@ const Hero = () => {
         loop
         muted
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover opacity-60"
-        src="/SA_Hero.mp4" // Place your audioless video inside client/public/ folder as hero-video.mp4
+        className="absolute top-0 left-0 w-full h-full object-cover opacity-100"
+        src="/SA_Hero_New.mp4" // Place your audioless video inside client/public/ folder as hero-video.mp4
       />
 
       {/* Hero Content */}
@@ -34,7 +34,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="text-lg sm:text-xl text-gray-200"
+            className="text-xl sm:text-2xl text-gray-8300 font-bold"
           >
             Experience world-class education with our industry-leading programs designed to empower and inspire.
           </motion.p>
@@ -56,7 +56,7 @@ const Hero = () => {
       </div>
 
       {/* Bottom Gradient overlay to blend with next section */}
-      <div className="absolute bottom-0 w-full h-32 bg-linear-to-b from-transparent to-slate-50"></div>
+      <div className="absolute bottom-0 w-full h-60 bg-linear-to-b from-transparent to-blue-500"></div>
     </section>
   );
 };
