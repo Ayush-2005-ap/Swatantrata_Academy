@@ -1,16 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
-import { Users, BookOpen, Award, Globe, MapPinPlus, Handshake } from 'lucide-react';
+import { Users, BookOpen, Award, Building2 } from 'lucide-react';
+
 
 const StatsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [counts, setCounts] = useState({ alumni: 0, programs: 0, fellows: 0, partners: 0 });
+  const [counts, setCounts] = useState([0, 0, 0, 0]);
   const sectionRef = useRef(null);
 
   const stats = [
-    { icon: Users, label: 'Alumni Network', value: 12000, suffix: '+', color: 'text-blue-600' },
-    { icon: BookOpen, label: 'Programs Conducted', value: 150, suffix: '+', color: 'text-green-600' },
-    { icon: MapPinPlus, label: 'Cities', value: 40, suffix: '+', color: 'text-purple-600' },
-    { icon: Handshake, label: 'Partnership', value: 25, suffix: '+', color: 'text-orange-600' },
+    { icon: Award, value: 150, label: 'Awards Won', color: 'text-primary' },
+    { icon: Users, value: 5000, label: 'Active Students', color: 'text-secondary' },
+    { icon: BookOpen, value: 120, label: 'Premium Courses', color: 'text-primary' },
+    { icon: Building2, value: 25, label: 'Global Centers', color: 'text-secondary' },
+
   ];
 
   useEffect(() => {
@@ -43,21 +45,11 @@ const StatsSection = () => {
       let currentStep = 0;
       const timer = setInterval(() => {
         currentStep++;
-        setCounts({
-          alumni: Math.floor((stats[0].value / steps) * currentStep),
-          programs: Math.floor((stats[1].value / steps) * currentStep),
-          fellows: Math.floor((stats[2].value / steps) * currentStep),
-          partners: Math.floor((stats[3].value / steps) * currentStep),
-        });
+        setCounts(stats.map(stat => Math.floor((stat.value / steps) * currentStep)));
 
         if (currentStep === steps) {
           clearInterval(timer);
-          setCounts({
-            alumni: stats[0].value,
-            programs: stats[1].value,
-            fellows: stats[2].value,
-            partners: stats[3].value,
-          });
+          setCounts(stats.map(stat => stat.value));
         }
       }, interval);
 
@@ -80,14 +72,12 @@ const StatsSection = () => {
               <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-50 rounded-2xl mb-6 transform hover:scale-110 hover:rotate-6 transition-all duration-300">
                 <stat.icon className={stat.color} size={40} />
               </div>
-              <div className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
-                {index === 0 && counts.alumni}
-                {index === 1 && counts.programs}
-                {index === 2 && counts.fellows}
-                {index === 3 && counts.partners}
-                <span className={stat.color}>{stat.suffix}</span>
-              </div>
-              <div className="text-gray-600 font-medium">{stat.label}</div>
+              <h3 className="text-4xl font-extrabold text-gray-800 mb-2 font-display">
+                {counts[index]}+
+              </h3>
+              <p className="text-gray-900 font-medium tracking-wide uppercase text-xs">
+                {stat.label}
+              </p>
             </div>
           ))}
         </div>

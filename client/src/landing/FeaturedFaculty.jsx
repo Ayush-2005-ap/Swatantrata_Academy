@@ -62,7 +62,7 @@ const FeaturedFaculty = () => {
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3"
               style={{ fontFamily: 'Georgia, serif' }}>
-            Meet Our <span className="text-blue-600">Faculty</span>
+            Meet Our <span className="text-primary">Faculty</span>
           </h2>
           <p className="text-base text-gray-600 max-w-2xl mx-auto">
             Distinguished scholars and policy experts driving impactful research
@@ -131,7 +131,7 @@ const FeaturedFaculty = () => {
                               openLinkedIn(faculty.linkedIn);
                             }}
                             className="flex items-center gap-2 px-5 py-2.5 bg-white
-                                       rounded-full text-blue-600 font-semibold text-sm
+                                       rounded-full text-primary font-semibold text-sm
                                        hover:scale-105 transition-all duration-200
                                        shadow-xl"
                           >
@@ -155,7 +155,7 @@ const FeaturedFaculty = () => {
                               e.stopPropagation();
                               openLinkedIn(faculty.linkedIn);
                             }}
-                            className="text-blue-600 hover:text-blue-800 hover:scale-110 
+                            className="text-primary hover:text-blue-800 hover:scale-110 
                                        transition-all duration-200 flex-shrink-0"
                             aria-label="LinkedIn Profile"
                           >
@@ -183,7 +183,7 @@ const FeaturedFaculty = () => {
               onClick={() => changeFaculty(() => index)}
               className={`h-2.5 rounded-full transition-all duration-300 ${
                 index === currentIndex
-                  ? 'w-10 bg-blue-600'
+                  ? 'w-10 bg-primary'
                   : 'w-2.5 bg-gray-300 hover:bg-gray-400'
               }`}
               aria-label={`Go to faculty ${index + 1}`}
@@ -200,8 +200,8 @@ const FeaturedFaculty = () => {
           <button
             onClick={() => navigate("/faculty")}
             className="group inline-flex items-center gap-2 px-8 py-3 rounded-full
-                       bg-blue-600 text-white font-semibold
-                       hover:bg-blue-700 transition-all duration-300
+                       bg-primary text-white font-semibold
+                       hover:bg-primary-dark transition-all duration-300
                        shadow-lg hover:shadow-xl hover:scale-105"
           >
             View All Faculty

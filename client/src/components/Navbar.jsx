@@ -57,13 +57,13 @@ const Navbar = () => {
                 to={link.path}
                 className={`text-sm font-semibold tracking-wide relative group ${
                   location.pathname === link.path
-                    ? "text-blue-600"
-                    : "text-gray-900 hover:text-blue-600"
+                    ? "text-primary"
+                    : "text-gray-900 hover:text-primary"
                 }`}
               >
                 {link.name}
                 <span
-                  className={`absolute -bottom-1 left-0 h-0.5 bg-blue-600 transition-all duration-300 ${
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
                     location.pathname === link.path
                       ? "w-full"
                       : "w-0 group-hover:w-full"
@@ -82,7 +82,7 @@ const Navbar = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label}
-                className="text-gray p-2 hover:scale-110 transition hover:text-blue-600"
+                className="text-gray p-2 hover:scale-110 transition hover:text-primary"
               >
                 <social.icon size={18} />
               </a>
@@ -91,7 +91,7 @@ const Navbar = () => {
 
           {/* Mobile Toggle */}
           <button
-            className="lg:hidden p-2 text-gray-700 hover:text-blue-600"
+            className="lg:hidden p-2 text-gray-700 hover:text-primary"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={26} /> : <Menu size={26} />}
@@ -110,8 +110,8 @@ const Navbar = () => {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`block text-base font-semibold ${
                   location.pathname === link.path
-                    ? "text-blue-600"
-                    : "text-gray-700 hover:text-blue-600"
+                    ? "text-primary"
+                    : "text-gray-700 hover:text-primary"
                 }`}
               >
                 {link.name}

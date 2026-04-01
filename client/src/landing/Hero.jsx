@@ -1,74 +1,62 @@
-import { useEffect, useState } from "react";
-
-const banners = [
-  "/banners/banner1.png",
-  "/banners/banner2.jpg",
-  "/banners/banner3.jpg",
-];
+import { motion } from "framer-motion";
 
 const Hero = () => {
-  const [current, setCurrent] = useState(0);
-  const [loaded, setLoaded] = useState(false);
-
-  // Preload images
-  useEffect(() => {
-    let loadedCount = 0;
-    banners.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === banners.length) {
-          setLoaded(true);
-        }
-      };
-    });
-  }, []);
-
-  // Auto scroll
-  useEffect(() => {
-    if (!loaded) return;
-
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % banners.length);
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, [loaded]);
-
   return (
-    <section className="w-full bg-gray-100 py-8 sm:py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative w-full h-[80vh] min-h-[600px] overflow-hidden bg-black">
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover opacity-60"
+        src="/video.mp4" // Place your audioless video inside client/public/ folder as hero-video.mp4
+      />
 
-        {/* Aspect-ratio based container */}
-        <div
-          className="
-            relative w-full
-            aspect-[4/5]        /* Mobile */
-            sm:aspect-[16/9]    /* Tablet */
-            lg:aspect-[21/9]    /* Desktop */
-            bg-white
-            rounded-2xl
-            overflow-hidden
-            shadow-2xl
-            flex items-center justify-center
-          "
+      {/* Hero Content */}
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+          className="max-w-3xl space-y-8"
         >
-          {loaded && (
-            <img
-              src={banners[current]}
-              alt={`Banner ${current + 1}`}
-              className="
-                w-full h-full
-                object-contain
-                transition-opacity
-                duration-700
-              "
-            />
-          )}
-        </div>
-
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.2 }}
+            className="text-4xl sm:text-5xl md:text-7xl font-bold text-white tracking-tight leading-tight"
+          >
+            Shape Your <span className="text-primary">Future</span>
+          </motion.h1>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="text-lg sm:text-xl text-gray-200"
+          >
+            Experience world-class education with our industry-leading programs designed to empower and inspire.
+          </motion.p>
+          
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
+          >
+            <button className="px-8 py-4 bg-primary text-white rounded-full font-semibold hover:bg-opacity-90 transition-all shadow-lg hover:shadow-primary/50">
+              Explore Programs
+            </button>
+            <button className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full font-semibold hover:bg-white/20 transition-all">
+              Learn More
+            </button>
+          </motion.div>
+        </motion.div>
       </div>
+
+      {/* Bottom Gradient overlay to blend with next section */}
+      <div className="absolute bottom-0 w-full h-32 bg-linear-to-b from-transparent to-slate-50"></div>
     </section>
   );
 };

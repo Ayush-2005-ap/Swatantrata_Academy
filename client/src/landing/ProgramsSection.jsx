@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import ProgramCard from './ProgramCard';
+
 
 const ProgramsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -36,7 +38,9 @@ const ProgramsSection = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="py-28 bg-gray-50">
+    <section ref={sectionRef} className="py-28 relative bg-transparent">
+
+
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Heading */}
@@ -44,7 +48,11 @@ const ProgramsSection = () => {
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Our <span className="text-blue-600">Programs</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <button className="flex items-center mx-auto space-x-2 text-blue-600 font-bold group/btn">
+            <span>Explore Program</span>
+            <ArrowRight size={20} className="group-hover/btn:translate-x-2 transition-transform" />
+          </button>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto mt-4">
             Flagship initiatives designed to shape ideas, leadership, and policy thinking
           </p>
         </div>

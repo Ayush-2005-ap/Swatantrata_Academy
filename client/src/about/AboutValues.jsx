@@ -30,27 +30,31 @@ const AboutValues = () => {
       <div className="max-w-7xl mx-auto px-4">
 
         {/* Title */}
-        <h2 className="text-4xl md:text-5xl font-light text-center text-blue-900 mb-20">
-          Our Liberal Approach
+        <h2 className="text-4xl md:text-5xl font-bold text-center text-gray-900 mb-20">
+          Our Liberal <span className="text-primary">Approach</span>
         </h2>
+
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {values.map((item, index) => (
             <div
               key={index}
-              className="group bg-[#062f5c] text-white p-10 rounded-md
-                         shadow-[0_12px_30px_rgba(0,0,0,0.25)]
+              className="group bg-white p-10 rounded-2xl
+                         shadow-[0_12px_30px_rgba(0,0,0,0.08)]
                          transition-all duration-500 ease-out
-                         hover:-translate-y-3 hover:shadow-[0_25px_60px_rgba(11,111,191,0.45)]
+                         hover:-translate-y-3 hover:shadow-[0_25px_60px_rgba(38,85,243,0.15)]
+                         border border-gray-100 hover:border-primary/20
                          opacity-0 animate-fadeUp hover:cursor-pointer"
               style={{ animationDelay: `${index * 120}ms` }}
             >
+
               {/* Icon */}
-              <div className="relative mx-auto w-28 h-28 rounded-full bg-[#0b6fbf]
+              <div className="relative mx-auto w-28 h-28 rounded-2xl bg-primary/10
                               flex items-center justify-center mb-8
                               transition-all duration-500
-                              group-hover:scale-110 group-hover:rotate-6">
+                              group-hover:scale-110 group-hover:bg-primary group-hover:rotate-6">
+
 
                 {/* Glow Ring */}
                 <div className="absolute inset-0 rounded-full border-2 border-blue-300
@@ -58,22 +62,22 @@ const AboutValues = () => {
                                 scale-125 group-hover:scale-150
                                 transition-all duration-500"></div>
 
-                <item.icon size={46} className="text-white relative z-10" />
+                <item.icon size={46} className="text-primary group-hover:text-white relative z-10 transition-colors duration-300" />
+
               </div>
 
               {/* Title */}
-              <h3 className="text-lg font-semibold tracking-wide mb-4
+              <h3 className="text-xl font-bold tracking-tight text-gray-900 mb-4
                              transition-colors duration-300
-                             group-hover:text-blue-200">
+                             group-hover:text-primary">
                 {item.title}
               </h3>
 
-              {/* Description */}
-              <p className="text-sm text-blue-100 leading-relaxed
-                            transition-all duration-300
-                            group-hover:text-white">
+              <p className="text-sm text-gray-600 leading-relaxed
+                            transition-all duration-300">
                 {item.description}
               </p>
+
             </div>
           ))}
         </div>
