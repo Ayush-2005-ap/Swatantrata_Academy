@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Linkedin } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { facultyData } from '../data/faculty.js';
 
 const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
-  const [isVisible, setIsVisible] = useState(false);
-
   useEffect(() => {
-    setIsVisible(true);
     window.scrollTo(0, 0);
   }, []);
 
@@ -19,74 +17,98 @@ const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
     : facultyData;
 
   return (
-    <div className="pt-20 min-h-screen bg-white">
+    <div className="pt-20 min-h-screen bg-slate-50">
 
       {/* Hero Section */}
-      <div className="bg-linear-to-br from-blue-800 via-blue-1100 to-blue-900 py-10">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-            }`}>
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6"
+      <div className="relative bg-gradient-to-br from-blue-800 via-blue-1100 to-blue-900 py-16 overflow-hidden">
+        {/* Subtle background wave for premium feel */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <svg className="absolute bottom-0 w-full" viewBox="0 0 1440 100" preserveAspectRatio="none">
+            <path fill="#ffffff" d="M0,100 L1440,100 L1440,50 Q1080,100 720,50 T0,50 Z"></path>
+          </svg>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 text-center relative z-10">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
+            <h1 className="text-5xl md:text-6xl font-extrabold text-white mb-6"
               style={{ fontFamily: 'Georgia, serif' }}>
-              POLICY SCHOLARS
+              Policy Scholars
             </h1>
             <p className="text-xl text-blue-100 max-w-3xl mx-auto">
               Distinguished policy experts, researchers, and thought leaders shaping ideas that matter
             </p>
-          </div>
-
+          </motion.div>
         </div>
       </div>
 
-      {/* Faculty Grid */}
-      <div className="max-w-7xl mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-5 gap-y-12">
-          {displayedFaculty.map((faculty, index) => (
-            <div
-              key={faculty.id}
-              className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-                }`}
-              style={{ transitionDelay: `${index * 100}ms` }}
-            >
-              <div className="group cursor-pointer">
+      {/* Animated Faculty Grid */}
+      <div className="max-w-7xl mx-auto px-4 py-20 pb-32">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+          {displayedFaculty.map((faculty, index) => {
+            // Alternate sliding in from left/right sides
+            const slideDirection = index % 2 === 0 ? -60 : 60;
 
-                {/* Image Container - Square */}
-                <div className="relative mb-5 overflow-hidden bg-gray-100 aspect-square 
-                                transition-all duration-300
-                                group-hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)]
-                                group-hover:-translate-y-1">
+            return (
+              <motion.div
+                key={faculty.id}
+                initial={{ opacity: 0, x: slideDirection, y: 30 }}
+                whileInView={{ opacity: 1, x: 0, y: 0 }}
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ duration: 0.8, delay: (index % 5) * 0.1, ease: "easeOut" }}
+              >
+                <div className="group relative w-full aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer shadow-xl bg-blue-900">
+
+                  {/* Background Image: Starts grayscale, fades to color on hover */}
                   <img
                     src={faculty.image}
                     alt={faculty.name}
-                    className="w-full h-full object-cover object-center grayscale group-hover:grayscale-0 
-                               transition-all duration-500"
+                    className="absolute inset-0 w-full h-full object-cover object-center grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 ease-in-out"
                   />
-                </div>
 
-                {/* Content */}
-                <div className="space-y-2">
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="text-base font-bold text-gray-900 tracking-tight flex-1"
-                      style={{ fontFamily: 'Georgia, serif' }}>
-                      {faculty.name}
-                    </h3>
-                    <button
-                      onClick={() => openLinkedIn(faculty.linkedIn)}
-                      className="text-blue-600 hover:text-blue-800 transition-colors flex-shrink-0 mt-0.5"
-                      aria-label="LinkedIn Profile"
-                    >
-                      <Linkedin size={16} />
-                    </button>
+                  {/* The Custom "Blue Grayscale" Tint Overlay */}
+                  <div className="absolute inset-0 bg-blue-900 mix-blend-multiply opacity-30 transition-opacity duration-700 group-hover:opacity-0 pointer-events-none" />
+
+                  {/* Pop-out Text Overlay Container */}
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 p-5 bg-gradient-to-t from-gray-900/95 via-blue-900/60 to-transparent flex flex-col justify-end translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 ease-out">
+
+                    <div className="flex items-start justify-between gap-3 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                      {/* Name */}
+                      <h3 className="text-lg font-bold text-white tracking-wide"
+                        style={{ fontFamily: 'Georgia, serif' }}>
+                        {faculty.name}
+                      </h3>
+
+                      {/* LinkedIn Button */}
+                      {faculty.linkedIn && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openLinkedIn(faculty.linkedIn);
+                          }}
+                          className="text-white hover:text-sky-400 transition-colors flex-shrink-0 bg-white/10 hover:bg-white/20 p-2 rounded-full backdrop-blur-md"
+                          aria-label="LinkedIn Profile"
+                        >
+                          <Linkedin size={18} />
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Title */}
+                    <p className="text-sky-200 uppercase font-semibold mt-2 tracking-wider transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500 delay-150"
+                      style={{ fontSize: '0.65rem' }}>
+                      {faculty.title}
+                    </p>
+
                   </div>
 
-                  <p className="text-xs text-gray-600 leading-relaxed uppercase tracking-wide"
-                    style={{ fontSize: '0.7rem', letterSpacing: '0.05em' }}>
-                    {faculty.title}
-                  </p>
                 </div>
-              </div>
-            </div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
 

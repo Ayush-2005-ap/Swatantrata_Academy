@@ -12,17 +12,17 @@ import { motion } from 'framer-motion';
 const InnovativePageBreak = ({ flip = false, variant = 1 }) => {
   return (
     <div className={`relative w-full h-32 sm:h-40 flex items-center justify-center overflow-hidden bg-transparent z-10 py-6 ${flip ? "transform rotate-180" : ""}`}>
-      <motion.svg viewBox="0 0 1440 200" className="absolute w-full h-full drop-shadow-[0_0_15px_rgba(249,115,22,0.4)]" preserveAspectRatio="none">
+      <motion.svg viewBox="0 0 1440 200" className="absolute w-full h-full drop-shadow-[0_0_15px_rgba(56,189,248,0.4)]" preserveAspectRatio="none">
         <defs>
           <linearGradient id={`grad1-${variant}`} x1="0%" y1="0%" x2="100%" y2="0%">
-            <stop offset="0%" stopColor="#f97316" />
-            <stop offset="50%" stopColor="#ffedd5" />
-            <stop offset="100%" stopColor="#2655F3" />
+            <stop offset="0%" stopColor="#38bdf8" />
+            <stop offset="50%" stopColor="#93c5fd" />
+            <stop offset="100%" stopColor="#1e3a8a" />
           </linearGradient>
           <linearGradient id={`grad2-${variant}`} x1="100%" y1="0%" x2="0%" y2="0%">
-            <stop offset="0%" stopColor="#ec4899" />
-            <stop offset="50%" stopColor="#2655F3" />
-            <stop offset="100%" stopColor="#f59e0b" />
+            <stop offset="0%" stopColor="#1d4ed8" />
+            <stop offset="50%" stopColor="#60a5fa" />
+            <stop offset="100%" stopColor="#0284c7" />
           </linearGradient>
         </defs>
 
@@ -46,7 +46,7 @@ const InnovativePageBreak = ({ flip = false, variant = 1 }) => {
         />
         <motion.circle
            cx={variant === 1 ? "530" : "800"} cy={variant === 1 ? "85" : "130"} r="10"
-           fill="#ffffff" stroke="#f97316" strokeWidth="3" className="drop-shadow-[0_0_20px_#f97316]"
+           fill="#ffffff" stroke="#38bdf8" strokeWidth="3" className="drop-shadow-[0_0_20px_#38bdf8]"
            initial={{ scale: 0, opacity: 0 }} whileInView={{ scale: [1, 1.4, 1], opacity: [0.8, 1, 0.8] }}
            viewport={{ once: false, margin: "-50px" }} transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         />
@@ -84,14 +84,14 @@ const DNAHelixBreak = () => {
 
    return (
     <div className="relative w-full h-24 flex items-center justify-center overflow-hidden z-10 py-6 opacity-90">
-      <motion.svg viewBox="0 0 1440 100" className="absolute w-full h-full drop-shadow-[0_4px_10px_rgba(236,72,153,0.3)]" preserveAspectRatio="none">
+      <motion.svg viewBox="0 0 1440 100" className="absolute w-full h-full drop-shadow-[0_4px_10px_rgba(56,189,248,0.3)]" preserveAspectRatio="none">
          {/* Bottom/Back Strand */}
-         <motion.path d={path1} fill="none" stroke="#ec4899" strokeWidth="4" strokeLinecap="round"
+         <motion.path d={path1} fill="none" stroke="#38bdf8" strokeWidth="4" strokeLinecap="round"
             initial={{ pathLength: 0, opacity: 0 }} whileInView={{ pathLength: 1, opacity: 0.7 }}
             viewport={{ once: false, margin: "-50px" }} transition={{ duration: 1.5, ease: "easeInOut" }}
          />
          {/* Top/Front Strand */}
-         <motion.path d={path2} fill="none" stroke="#f59e0b" strokeWidth="5" strokeLinecap="round"
+         <motion.path d={path2} fill="none" stroke="#1d4ed8" strokeWidth="5" strokeLinecap="round"
             initial={{ pathLength: 0, opacity: 0 }} whileInView={{ pathLength: 1, opacity: 1 }}
             viewport={{ once: false, margin: "-50px" }} transition={{ duration: 1.5, delay: 0.2, ease: "easeInOut" }}
          />
@@ -110,7 +110,7 @@ const FiberOpticBreak = () => (
             whileInView={{ x: 0, opacity: [0, 0.8, 0.4] }}
             viewport={{ once: false, margin: "-50px" }}
             transition={{ duration: 1 + i*0.4, ease: "easeOut", opacity: { repeat: Infinity, duration: 3, delay: 1 } }}
-            className={`w-[120%] h-[2px] bg-linear-to-r from-transparent ${i === 1 ? 'via-orange-500' : 'via-primary'} to-transparent blur-[1px]`}
+            className={`w-[120%] h-[2px] bg-linear-to-r from-transparent ${i === 1 ? 'via-blue-900' : 'via-primary'} to-transparent blur-[1px]`}
          />
       ))}
   </div>
@@ -167,7 +167,7 @@ const Home = () => {
       {/* 5th Dynamic Break: Kept as Energy Ribbon (to mirror the top) */}
       <InnovativePageBreak variant={1} flip={true} />
 
-      <AnimatedSection className="bg-white py-10 rounded-[40px] border border-gray-100 shadow-xl mx-4 sm:mx-8">
+      <AnimatedSection className="bg-white py-10 rounded-[40px] border border-gray-500 shadow-xl mx-4 sm:mx-8">
         <FeaturedFaculty />
       </AnimatedSection>
 
@@ -177,10 +177,12 @@ const Home = () => {
         whileInView={{ opacity: 1, scaleY: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 1 }}
-        className="relative h-24 bg-white mt-8"
+        // This negative margin physically pulls the global Footer below it UP by 1 pixel, cleanly crushing any white gaps.
+        style={{ marginBottom: "-1px" }}
+        className="relative w-full leading-[0] mt-8"
       >
-        <svg className="absolute bottom-0 w-full" viewBox="0 0 1440 120" preserveAspectRatio="none">
-          <path fill="#153bb6ff" d="M0,120L48,110C96,100,192,80,288,70C384,60,480,60,576,65C672,70,768,80,864,85C960,90,1056,90,1152,85C1248,80,1344,70,1392,65L1440,60L1440,120L1392,120C1344,120,1248,120,1152,120C1056,120,960,120,864,120C768,120,672,120,576,120C480,120,384,120,288,120C192,120,96,120,48,120L0,120Z"></path>
+        <svg className="w-full block" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path fill="#224DE2" d="M0,120 L48,110 C96,100,192,80,288,70 C384,60,480,60,576,65 C672,70,768,80,864,85 C960,90,1056,90,1152,85 C1248,80,1344,70,1392,65 L1440,60 L1440,120 L0,120 Z"></path>
         </svg>
       </motion.div>
 
