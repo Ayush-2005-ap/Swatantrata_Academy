@@ -27,17 +27,10 @@ const Hero = () => {
             transition={{ duration: 1, delay: 0.2 }}
             className="text-4xl sm:text-5xl md:text-7xl font-bold text-white tracking-tight leading-tight"
           >
-            Shape Your <span className="text-primary">Future</span>
+            Exploring Power of <span className="text-primary">Ideas</span>
           </motion.h1>
           
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.4 }}
-            className="text-xl sm:text-2xl text-gray-8300 font-bold"
-          >
-            Experience world-class education with our industry-leading programs designed to empower and inspire.
-          </motion.p>
+          
           
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
