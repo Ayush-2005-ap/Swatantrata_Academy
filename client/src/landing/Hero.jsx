@@ -10,7 +10,7 @@ const Hero = () => {
         muted
         playsInline
         className="absolute top-0 left-0 w-full h-full object-cover opacity-60"
-        src="/video.mp4" // Place your audioless video inside client/public/ folder as hero-video.mp4
+        src="/SA_Hero.mp4" // Place your audioless video inside client/public/ folder as hero-video.mp4
       />
 
       {/* Hero Content */}
