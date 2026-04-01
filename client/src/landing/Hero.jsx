@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section className="relative w-full h-[80vh] min-h-[600px] overflow-hidden bg-black">
       {/* Background Video */}
@@ -27,10 +29,17 @@ const Hero = () => {
             transition={{ duration: 1, delay: 0.2 }}
             className="text-4xl sm:text-5xl md:text-7xl font-bold text-white tracking-tight leading-tight"
           >
-            Exploring Power of <span className="text-primary">Ideas</span>
+            SWATANTRA <span className="text-primary">ACADEMY</span>
           </motion.h1>
           
-          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="text-xl sm:text-5xl text-cyan-400 font-bold"
+          >
+            Exploring Power of Ideas
+          </motion.p>
           
           <motion.div 
             initial={{ opacity: 0, scale: 0.9 }}
@@ -38,10 +47,10 @@ const Hero = () => {
             transition={{ duration: 0.5, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
           >
-            <button className="px-8 py-4 bg-primary text-white rounded-full font-semibold hover:bg-opacity-90 transition-all shadow-lg hover:shadow-primary/50">
+            <button onClick={() => navigate('/programs')} className="px-8 py-4 cursor-pointer bg-primary text-white rounded-full font-semibold hover:bg-opacity-90 transition-all shadow-lg hover:shadow-primary/50">
               Explore Programs
             </button>
-            <button className="px-8 py-4 bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full font-semibold hover:bg-white/20 transition-all">
+            <button onClick={() => navigate('/about')} className="px-8 py-4 cursor-pointer bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-full font-semibold hover:bg-white/20 transition-all">
               Learn More
             </button>
           </motion.div>
