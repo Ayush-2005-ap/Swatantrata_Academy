@@ -1,19 +1,40 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 const Hero = () => {
   const navigate = useNavigate();
+  const [videoUrl, setVideoUrl] = useState("/SA_web3.mp4"); // Fallback
+
+  useEffect(() => {
+    // Fetch and sync settings
+    const fetchSettings = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/settings`);
+        if (response.data.HERO_VIDEO_URL) {
+          setVideoUrl(response.data.HERO_VIDEO_URL);
+        }
+      } catch (err) {
+        console.error("Error fetching hero settings:", err);
+      }
+    };
+    fetchSettings();
+  }, []);
+
   return (
     <section className="relative w-full h-[80vh] min-h-[600px] overflow-hidden bg-black">
       {/* Background Video with Dark Overlay */}
       <div className="absolute inset-0 bg-black/40 z-[1]"></div> 
       <video
+        key={videoUrl} // Force video player to reset when the URL changes
         autoPlay
         loop
         muted
         playsInline
         className="absolute top-0 left-0 w-full h-full object-cover"
-        src="/SA_web3.mp4" 
+        src={videoUrl} 
       />
 
       {/* Hero Content */}
@@ -38,7 +59,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="text-xl sm:text-3xl md:text-4xl text-white font-extrabold uppercase tracking-[0.4em] drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]"
+            className="text-xl sm:text-3xl md:text-4xl text-white font-extrabold  tracking-[0.4em] drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]"
           >
             Exploring the Power of Ideas
           </motion.p>

@@ -1,91 +1,44 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { ArrowLeft, Calendar, ArrowRight } from 'lucide-react';
-
-// 🔹 SAME programs data (temporary duplication – later moved to data folder)
-const programs = [
-  {
-    id: 'ipolicy-young-leaders',
-    title: 'iPolicy for Young Leaders',
-    description:
-      'The iPolicy for Young Leaders program focuses on developing ethical, research-driven policy thinkers who can contribute meaningfully to governance and public policy.',
-  },
-  {
-    id: 'colloquium',
-    title: 'Colloquium',
-    description:
-      'Colloquium brings together students and experts for deep discussions on leadership, governance, and public policy challenges.',
-  },
-  {
-    id: 'aes',
-    title: 'AES',
-    description:
-      'AES is a competitive scholarship-based program aimed at identifying and nurturing high-potential individuals.',
-  },
-  {
-    id: 'epolicy-young-leaders',
-    title: 'ePolicy for Young Leaders',
-    description:
-      'A long-term immersive program offering hands-on experience in policy analysis and advocacy.',
-  },
-  {
-    id: 'policy-camp',
-    title: 'Policy Camp',
-    description:
-      'Policy Camp is an intensive short-term training covering policy fundamentals and real-world applications.',
-  },
-  {
-    id: 'mooc',
-    title: 'MOOC',
-    description:
-      'A structured online learning program designed for professionals and students alike.',
-  },
-  {
-    id: 'master-class',
-    title: 'Master Class',
-    description:
-      'Master Classes are expert-led sessions focused on niche policy and leadership topics.',
-  },
-  {
-    id: 'credit-courses',
-    title: 'Credit Courses',
-    description:
-      'Self-paced academic credit courses covering economics, governance, and public policy.',
-  },
-];
-
-// 🔹 Dummy events
-const programEvents = [
-  {
-    id: 'yls-2024',
-    programId: 'ipolicy-young-leaders',
-    title: 'iPolicy Youth Leadership 2024',
-    date: 'August 2024',
-  },
-  {
-    id: 'policy-dialogue',
-    programId: 'ipolicy-young-leaders',
-    title: 'Policy Dialogue Series',
-    date: 'January 2024',
-  },
-  {
-    id: 'startup-policy',
-    programId: 'colloquium',
-    title: 'Startup & Policy Roundtable',
-    date: 'February 2024',
-  },
-];
+import { API_BASE_URL } from '../../config';
 
 const ProgramDetail = () => {
   const { programId } = useParams();
   const navigate = useNavigate();
+  const [program, setProgram] = useState(null);
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    const fetchData = async () => {
+      try {
+        // Fetch specific program info (We can use the all-programs list and filter)
+        const programsRes = await axios.get(`${API_BASE_URL}/programs`);
+        const foundProgram = programsRes.data.find(p => p.id === programId);
+        setProgram(foundProgram);
 
-  const program = programs.find(p => p.id === programId);
-  const events = programEvents.filter(e => e.programId === programId);
+        // Fetch events for this program
+        const eventsRes = await axios.get(`${API_BASE_URL}/events/program/${programId}`);
+        setEvents(eventsRes.data);
+      } catch (err) {
+        console.error("Error fetching program details:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [programId]);
+
+  if (loading) {
+    return (
+      <div className="pt-32 text-center">
+        <h1 className="text-2xl font-bold animate-pulse text-gray-400">Loading Program Details...</h1>
+      </div>
+    );
+  }
 
   if (!program) {
     return (

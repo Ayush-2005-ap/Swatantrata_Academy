@@ -1,32 +1,27 @@
-const team = [
-  {
-    name: 'Dr. Amit Chandra',
-    role: 'Director',
-    image: '/Board/Board1.png',
-  },
-  {
-    name: 'Kumar Anand',
-    role: 'Academic Head',
-    image: '/Board/Board2.png',
-  },
-  {
-    name: 'Sujatha Muthayya',
-    role: 'Program Manager',
-    image: '/Board/Board3.png',
-  },
-  {
-    name: 'Ms. Ananya Singh',
-    role: 'Research Coordinator',
-    image: 'https://images.pexels.com/photos/3756679/pexels-photo-3756679.jpeg',
-  },
-  {
-    name: 'Renu Pokharna',
-    role: 'Policy Advisor',
-    image: '/Board/Board4.png',
-  },
-];
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 const AboutTeam = () => {
+  const [team, setTeam] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTeam = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/members`);
+        setTeam(response.data.filter(m => m.type === 'board'));
+      } catch (err) {
+        console.error("Error fetching team:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTeam();
+  }, []);
+
+  if (loading) return <div className="text-center py-20 animate-pulse font-bold text-blue-900">Loading Board...</div>;
+  if (team.length === 0) return null;
   return (
     <section
       aria-label="Board Members"
@@ -45,7 +40,7 @@ const AboutTeam = () => {
                        overflow-hidden focus-within:ring-2 ring-blue-500"
           >
             <img
-              src={member.image}
+              src={`${member.image.startsWith('http') || member.image.startsWith('/') ? '' : 'http://localhost:5050'}${member.image}`}
               alt={`${member.name} – ${member.role}`}
               loading="lazy"
               sizes="(max-width: 1024px) 50vw, 20vw"

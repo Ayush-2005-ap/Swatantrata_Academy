@@ -1,11 +1,27 @@
 import { useState, useEffect } from 'react';
 import { Linkedin } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { facultyData } from '../data/faculty.js';
+import axios from 'axios';
+import { API_BASE_URL } from '../config';
 
 const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
+  const [facultyData, setFacultyData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchFaculty = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/members`);
+        const allFaculty = response.data.filter(m => m.type === 'faculty');
+        setFacultyData(allFaculty);
+      } catch (err) {
+        console.error("Error fetching faculty:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFaculty();
   }, []);
 
   const openLinkedIn = (url) => {
@@ -15,6 +31,9 @@ const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
   const displayedFaculty = showFeaturedOnly
     ? facultyData.filter(f => f.featured).slice(0, limit || 6)
     : facultyData;
+
+  if (loading) return <div className="text-center py-40 animate-pulse font-bold text-blue-900">Identifying Scholars...</div>;
+  if (facultyData.length === 0) return null;
 
   return (
     <div className="pt-20 min-h-screen bg-slate-50">
@@ -64,7 +83,7 @@ const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
 
                   {/* Background Image: Starts grayscale, fades to color on hover */}
                   <img
-                    src={faculty.image}
+                    src={`${faculty.image.startsWith('http') || faculty.image.startsWith('/') ? '' : 'http://localhost:5050'}${faculty.image}`}
                     alt={faculty.name}
                     className="absolute inset-0 w-full h-full object-cover object-center grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 ease-in-out"
                   />

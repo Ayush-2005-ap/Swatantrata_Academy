@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Youtube, Instagram, Facebook, Twitter } from "lucide-react";
+import { Menu, X, Youtube, Instagram, Facebook, Twitter, Shield } from "lucide-react";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const isAdmin = !!localStorage.getItem("adminToken");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -84,6 +85,17 @@ const Navbar = () => {
                 <social.icon size={18} />
               </a>
             ))}
+            
+            {isAdmin && (
+              <Link 
+                to="/admin" 
+                className="ml-4 flex items-center space-x-2 bg-blue-900 border border-blue-950 text-white px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-widest hover:bg-black transition-colors"
+                title="Admin Dashboard"
+              >
+                <Shield size={16} />
+                <span>Admin</span>
+              </Link>
+            )}
           </div>
 
           {/* Mobile Toggle */}
@@ -114,18 +126,30 @@ const Navbar = () => {
               </Link>
             ))}
 
-            <div className="flex gap-4 pt-4 border-t">
-              {socialLinks.map((social, index) => (
-                <a
-                  key={index}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-100 hover:text-blue-100"
+            <div className="flex gap-4 pt-4 border-t items-center justify-between">
+              <div className="flex gap-4">
+                {socialLinks.map((social, index) => (
+                  <a
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-100 hover:text-blue-100"
+                  >
+                    <social.icon size={22} />
+                  </a>
+                ))}
+              </div>
+              
+              {isAdmin && (
+                <Link 
+                  to="/admin" 
+                  className="flex items-center space-x-2 bg-blue-900 text-white px-4 py-2 rounded-lg font-bold text-xs uppercase tracking-widest"
                 >
-                  <social.icon size={22} />
-                </a>
-              ))}
+                  <Shield size={16} />
+                  <span>Admin</span>
+                </Link>
+              )}
             </div>
           </div>
         </div>

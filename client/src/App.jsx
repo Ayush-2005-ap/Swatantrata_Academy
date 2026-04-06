@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Analytics } from "@vercel/analytics/react"
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
@@ -10,35 +10,59 @@ import ChatBot from './chatbot/ChatBot';
 import Faculty from './pages/Faculty';
 import ProgramDetail from "./programs/pages/ProgramDetail";
 import EventDetail from "./programs/pages/EventDetail";
-import Snowfall from 'react-snowfall';
+
+// 🏆 Admin Imports
+import AdminLayout from './admin/AdminLayout';
+import AdminDashboard from './admin/pages/AdminDashboard';
+import AdminEvents from './admin/pages/AdminEvents';
+import AdminFaculty from './admin/pages/AdminFaculty';
+import AdminPrograms from './admin/pages/AdminPrograms';
+import LoginPage from './admin/LoginPage';
+import ProtectedRoute from './admin/ProtectedRoute';
+
+function AppContent() {
+  const location = useLocation();
+  const isAdminPath = location.pathname.startsWith('/admin');
+
+  return (
+    <div className="min-h-screen relative">
+      {!isAdminPath && <Navbar />}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/programs" element={<Programs />} />
+        <Route path="/programs/:programId" element={<ProgramDetail />} />
+        <Route
+          path="/programs/:programId/events/:eventId"
+          element={<EventDetail />}
+        />
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/faculty" element={<Faculty />} />
+
+        {/* 🔐 Admin Routes */}
+        <Route path="/admin/login" element={<LoginPage />} />
+        
+        <Route path="/admin" element={<ProtectedRoute />}>
+          <Route element={<AdminLayout />}>
+             <Route index element={<AdminDashboard />} />
+             <Route path="settings" element={<AdminDashboard />} /> 
+             <Route path="events" element={<AdminEvents />} />
+             <Route path="programs" element={<AdminPrograms />} /> 
+             <Route path="faculty" element={<AdminFaculty />} />
+          </Route>
+        </Route>
+      </Routes>
+      {!isAdminPath && <ChatBot />}
+      {!isAdminPath && <Footer />}
+      <Analytics />
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
-      <div className="min-h-screen relative">
-        {/* <Snowfall color='#2657F5' style={{
-          position: "fixed",
-          width: "100vw",
-          height: "100vh",
-          zIndex: 9999,
-          pointerEvents: "none"
-        }} /> */}
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/programs" element={<Programs />} />
-          <Route path="/programs/:programId" element={<ProgramDetail />} />
-          <Route
-            path="/programs/:programId/events/:eventId"
-            element={<EventDetail />}
-          />
-          <Route path="/about" element={<AboutUs />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/faculty" element={<Faculty />} />   
-        </Routes>
-        <ChatBot />
-        <Footer />
-        <Analytics />
-      </div>
+      <AppContent />
     </Router>
   );
 }

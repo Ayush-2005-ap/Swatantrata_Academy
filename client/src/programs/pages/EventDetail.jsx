@@ -1,56 +1,40 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import {
   ArrowLeft,
   Calendar,
 } from 'lucide-react';
-
-/* 🔹 Dummy Event Data */
-/* 
-   To change or add a summary:
-   1. Find the event in the 'programEvents' array below.
-   2. Edit the 'about' property with your new summary text.
-   3. Note: The 'id' must match the one used in ProgramDetail.jsx.
-*/
-const programEvents = [
-  {
-    id: 'yls-2024',
-    programId: 'ipolicy-young-leaders',
-    title: 'iPolicy Youth Leadership 2024',
-    date: 'August 2024',
-    isPast: true,
-    about:
-      'The Youth Leadership Summit 2024 brought together young leaders from across the country to discuss governance, ethics, and leadership. The event featured panel discussions, workshops, and interactive sessions led by experienced policymakers and scholars.',
-  },
-  {
-    id: 'policy-dialogue',
-    programId: 'ipolicy-young-leaders',
-    title: 'Policy Dialogue Series',
-    date: 'January 2024',
-    isPast: true,
-    about:
-      'The Policy Dialogue Series explored the intersection of technology and governance in the 21st century. Scholars and practitioners engaged in vibrant debates about the future of digital democracy and the role of institutions in fostering innovation.',
-  },
-  {
-    id: 'startup-policy',
-    programId: 'colloquium',
-    title: 'Startup & Policy Roundtable',
-    date: 'February 2024',
-    isPast: true,
-    about:
-      'Our Startup & Policy Roundtable brought together entrepreneurs and regulators to discuss the challenges of the startup ecosystem. The session focused on harmonizing innovation with regulatory frameworks to ensure sustainable growth.',
-  },
-];
+import { API_BASE_URL } from '../../config';
 
 const EventDetail = () => {
   const { programId, eventId } = useParams();
   const navigate = useNavigate();
+  const [event, setEvent] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    const fetchEvent = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/events/${eventId}`);
+        setEvent(response.data);
+      } catch (err) {
+        console.error("Error fetching event:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchEvent();
+  }, [eventId]);
 
-  const event = programEvents.find(e => e.id === eventId);
+  if (loading) {
+    return (
+      <div className="pt-32 text-center">
+        <h1 className="text-2xl font-bold animate-pulse text-gray-400">Loading Summary...</h1>
+      </div>
+    );
+  }
 
   if (!event) {
     return (
