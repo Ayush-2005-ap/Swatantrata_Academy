@@ -5,38 +5,40 @@ const Hero = () => {
   const navigate = useNavigate();
   return (
     <section className="relative w-full h-[80vh] min-h-[600px] overflow-hidden bg-black">
-      {/* Background Video */}
+      {/* Background Video with Dark Overlay */}
+      <div className="absolute inset-0 bg-black/40 z-[1]"></div> 
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover opacity-100"
-        src="/SA_web3.mp4" // Place your audioless video inside client/public/ folder as hero-video.mp4
+        className="absolute top-0 left-0 w-full h-full object-cover"
+        src="/SA_web3.mp4" 
       />
 
       {/* Hero Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center">
+      <div className="relative z-10 px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center items-center text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="max-w-3xl space-y-8"
+          className="space-y-4 w-full"
         >
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="text-4xl sm:text-5xl md:text-7xl font-bold text-white tracking-tight leading-tight"
+            className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-serif text-white tracking-widest leading-tight drop-shadow-2xl uppercase whitespace-nowrap"
+            style={{ fontFamily: "'Times New Roman', serif" }}
           >
-            SWATANTRA <span className="text-primary">ACADEMY</span>
+            SWATANTRA ACADEMY
           </motion.h1>
           
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="text-xl sm:text-5xl text-white font-bold"
+            className="text-xl sm:text-3xl md:text-4xl text-white font-extrabold uppercase tracking-[0.4em] drop-shadow-[0_4px_6px_rgba(0,0,0,0.9)]"
           >
             Exploring the Power of Ideas
           </motion.p>

@@ -19,7 +19,7 @@ const Navbar = () => {
   const navLinks = [
     { name: "HOME", path: "/" },
     { name: "PROGRAMS", path: "/programs" },
-    { name: "FACULTY", path:'/faculty' },
+    { name: "FACULTY", path: '/faculty' },
     { name: "ABOUT US", path: "/about" },
     { name: "CONTACT US", path: "/contact" },
   ];
@@ -33,13 +33,12 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? "bg-white shadow-md" : "bg-white/90 backdrop-blur"
-      }`}
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-md" : "bg-white/90 backdrop-blur"
+        }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          
+
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
             <img
@@ -55,19 +54,17 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.path}
-                className={`text-sm font-semibold tracking-wide relative group ${
-                  location.pathname === link.path
+                className={`text-sm font-semibold tracking-wide relative group ${location.pathname === link.path
                     ? "text-primary"
                     : "text-gray-900 hover:text-primary"
-                }`}
+                  }`}
               >
                 {link.name}
                 <span
-                  className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
-                    location.pathname === link.path
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${location.pathname === link.path
                       ? "w-full"
                       : "w-0 group-hover:w-full"
-                  }`}
+                    }`}
                 />
               </Link>
             ))}
@@ -108,11 +105,10 @@ const Navbar = () => {
                 key={link.name}
                 to={link.path}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className={`block text-base font-semibold ${
-                  location.pathname === link.path
+                className={`block text-base font-semibold ${location.pathname === link.path
                     ? "text-primary"
                     : "text-gray-700 hover:text-primary"
-                }`}
+                  }`}
               >
                 {link.name}
               </Link>
