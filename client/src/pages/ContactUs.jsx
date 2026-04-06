@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Mail, Phone, MapPin, Clock, Send, Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 const ContactUs = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -27,7 +28,7 @@ const ContactUs = () => {
         e.preventDefault();
       
         try {
-          const res = await fetch("http://localhost:5050/api/contact", {
+          const res = await fetch(`${API_BASE_URL}/contact`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
