@@ -12,7 +12,7 @@ const Hero = () => {
         muted
         playsInline
         className="absolute top-0 left-0 w-full h-full object-cover opacity-100"
-        src="/SA_Hero_New.mp4" // Place your audioless video inside client/public/ folder as hero-video.mp4
+        src="/SA_web3.mp4" // Place your audioless video inside client/public/ folder as hero-video.mp4
       />
 
       {/* Hero Content */}
@@ -36,9 +36,9 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="text-xl sm:text-5xl text-cyan-400 font-bold"
+            className="text-xl sm:text-5xl text-white font-bold"
           >
-            Exploring Power of Ideas
+            Exploring the Power of Ideas
           </motion.p>
           
           <motion.div 

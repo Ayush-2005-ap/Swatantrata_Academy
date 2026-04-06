@@ -3,49 +3,42 @@ import { useParams, useNavigate } from 'react-router-dom';
 import {
   ArrowLeft,
   Calendar,
-  Quote,
-  Image as ImageIcon,
 } from 'lucide-react';
 
-/* 🔹 Dummy Event Data (Supabase-ready structure) */
+/* 🔹 Dummy Event Data */
+/* 
+   To change or add a summary:
+   1. Find the event in the 'programEvents' array below.
+   2. Edit the 'about' property with your new summary text.
+   3. Note: The 'id' must match the one used in ProgramDetail.jsx.
+*/
 const programEvents = [
   {
     id: 'yls-2024',
     programId: 'ipolicy-young-leaders',
-    title: 'iPolicy Youth Leadership 2025',
-    date: 'August 2025',
+    title: 'iPolicy Youth Leadership 2024',
+    date: 'August 2024',
+    isPast: true,
     about:
       'The Youth Leadership Summit 2024 brought together young leaders from across the country to discuss governance, ethics, and leadership. The event featured panel discussions, workshops, and interactive sessions led by experienced policymakers and scholars.',
-
-    quotes: [
-      {
-        name: 'Dr. Amit Chandra',
-        text: 'Leadership is not about authority, but about responsibility and service.',
-      },
-      {
-        name: 'Policy Expert',
-        text: 'Young leaders must think beyond politics and focus on institutions.',
-      },
-    ],
-
-    testimonials: [
-      {
-        name: 'Participant – Delhi',
-        feedback:
-          'This summit completely changed how I view leadership and public service.',
-      },
-      {
-        name: 'Student – Mumbai',
-        feedback:
-          'The discussions were insightful and deeply engaging. A must-attend event.',
-      },
-    ],
-
-    gallery: [
-      '/events/yls-2024/1.jpg',
-      '/events/yls-2024/2.jpg',
-      '/events/yls-2024/3.jpg',
-    ],
+  },
+  {
+    id: 'policy-dialogue',
+    programId: 'ipolicy-young-leaders',
+    title: 'Policy Dialogue Series',
+    date: 'January 2024',
+    isPast: true,
+    about:
+      'The Policy Dialogue Series explored the intersection of technology and governance in the 21st century. Scholars and practitioners engaged in vibrant debates about the future of digital democracy and the role of institutions in fostering innovation.',
+  },
+  {
+    id: 'startup-policy',
+    programId: 'colloquium',
+    title: 'Startup & Policy Roundtable',
+    date: 'February 2024',
+    isPast: true,
+    about:
+      'Our Startup & Policy Roundtable brought together entrepreneurs and regulators to discuss the challenges of the startup ecosystem. The session focused on harmonizing innovation with regulatory frameworks to ensure sustainable growth.',
   },
 ];
 
@@ -74,7 +67,7 @@ const EventDetail = () => {
         <div className="max-w-6xl mx-auto px-4 text-white">
           <button
             onClick={() => navigate(`/programs/${programId}`)}
-            className="flex items-center space-x-2 mb-6 text-blue-200 hover:text-white"
+            className="flex items-center space-x-2 mb-6 text-blue-200 hover:outline-none hover:text-white"
           >
             <ArrowLeft size={18} />
             <span>Back to Program</span>
@@ -91,89 +84,18 @@ const EventDetail = () => {
         </div>
       </div>
 
-      {/* Content */}
-      <div className="max-w-6xl mx-auto px-4 py-20 space-y-20">
-
-        {/* What Happened */}
-        <section>
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
-            What Happened
+      {/* Content: Summary View only */}
+      <div className="max-w-6xl mx-auto px-4 py-20">
+        <section className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 md:p-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">
+            Event Summary
           </h2>
-          <p className="text-gray-700 leading-relaxed max-w-4xl">
-            {event.about}
-          </p>
-        </section>
-
-        {/* Expert Quotes */}
-        <section>
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
-            Expert Insights
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {event.quotes.map((quote, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-xl shadow-md p-6"
-              >
-                <Quote className="text-blue-600 mb-4" />
-                <p className="italic text-gray-700 mb-4">
-                  “{quote.text}”
-                </p>
-                <p className="font-semibold text-gray-900">
-                  — {quote.name}
-                </p>
-              </div>
+          <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+            {event.about.split('\n').map((paragraph, idx) => (
+              <p key={idx} className="mb-4">{paragraph}</p>
             ))}
           </div>
         </section>
-
-        {/* Testimonials */}
-        <section>
-          <h2 className="text-3xl font-bold text-gray-900 mb-8">
-            Testimonials
-          </h2>
-
-          <div className="space-y-6 max-w-4xl">
-            {event.testimonials.map((t, idx) => (
-              <div
-                key={idx}
-                className="bg-white rounded-xl shadow-md p-6"
-              >
-                <p className="text-gray-700 mb-2">
-                  “{t.feedback}”
-                </p>
-                <p className="font-semibold text-gray-900">
-                  — {t.name}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Gallery */}
-        <section>
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 flex items-center space-x-2">
-            <ImageIcon />
-            <span>Event Gallery</span>
-          </h2>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {event.gallery.map((img, idx) => (
-              <div
-                key={idx}
-                className="overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300"
-              >
-                <img
-                  src={img}
-                  alt="Event"
-                  className="w-full h-56 object-cover hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-            ))}
-          </div>
-        </section>
-
       </div>
     </div>
   );

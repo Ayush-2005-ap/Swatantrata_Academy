@@ -59,8 +59,8 @@ const programEvents = [
   {
     id: 'yls-2024',
     programId: 'ipolicy-young-leaders',
-    title: 'iPolicy Youth Leadership 2025',
-    date: 'March 2024',
+    title: 'iPolicy Youth Leadership 2024',
+    date: 'August 2024',
   },
   {
     id: 'policy-dialogue',
