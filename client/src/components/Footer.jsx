@@ -89,12 +89,12 @@ export default function Footer() {
         <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-sm text-white/80 gap-4">
           <p>© 2026 Swatantra Academy. All rights reserved.</p>
           <div className="flex gap-6">
-            <a className="hover:text-white transition" href="#privacy">
-              Privacy Policy
-            </a>
-            <a className="hover:text-white transition" href="#terms">
-              Terms of Service
-            </a>
+            <Link className="hover:text-white transition" to="/privacy">
+                Privacy Policy
+            </Link>
+            <Link className="hover:text-white transition" to="/terms">
+                Terms of Service
+            </Link>
           </div>
         </div>
       </div>

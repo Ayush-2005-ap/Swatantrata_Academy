@@ -7,6 +7,7 @@ import Programs from './pages/Programs';
 import AboutUs from './pages/AboutUs';
 import ContactUs from './pages/ContactUs';
 import Footer from './components/Footer';
+import LegalPage from './pages/LegalPage';
 import ChatBot from './chatbot/ChatBot';
 import Faculty from './pages/Faculty';
 import ProgramDetail from "./programs/pages/ProgramDetail";
@@ -42,6 +43,7 @@ function AppContent() {
         <Route path="/about" element={<AboutUs />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/faculty" element={<Faculty />} />
+        <Route path="/privacy" element={<LegalPage />} />
 
         {/* 🔐 Admin Routes */}
         <Route path="/admin/login" element={<LoginPage />} />
