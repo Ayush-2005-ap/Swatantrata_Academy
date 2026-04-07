@@ -37,6 +37,10 @@ const ProgramSchema = new mongoose.Schema({
   logo: {
     type: String,
     default: '' // Cloudinary URL for the logo
+  },
+  isMainProgram: {
+    type: Boolean,
+    default: false // Whether the program is showcased on the landing page
   }
 }, { timestamps: true });
 

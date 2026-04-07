@@ -8,17 +8,27 @@ const TopBanner = () => {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    const fetchSettings = async () => {
+    const fetchSync = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}/settings`);
-        if (response.data.SITE_NOTIFICATION) {
-          setNotification(response.data.SITE_NOTIFICATION);
+        const [settingsRes, eventsRes] = await Promise.all([
+          axios.get(`${API_BASE_URL}/settings`),
+          axios.get(`${API_BASE_URL}/events`)
+        ]);
+
+        const hasActiveEvents = eventsRes.data.some(e => e.isPast === false);
+        const globalVisible = settingsRes.data.UPCOMING_EVENTS_VISIBLE !== false;
+
+        if (globalVisible && hasActiveEvents && settingsRes.data.SITE_NOTIFICATION) {
+          setNotification(settingsRes.data.SITE_NOTIFICATION);
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
         }
       } catch (err) {
         console.error("Banner fetch failed:", err);
       }
     };
-    fetchSettings();
+    fetchSync();
   }, []);
 
   if (!notification || !isVisible) return null;

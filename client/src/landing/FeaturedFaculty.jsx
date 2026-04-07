@@ -18,9 +18,11 @@ const FeaturedFaculty = () => {
     const fetchFaculty = async () => {
       try {
         const res = await axios.get(`${API_BASE_URL}/members`);
-        // Filter for featured faculty members
-        const filtered = res.data.filter(m => m.type === 'faculty').slice(0, 8);
-        setFeaturedFaculty(filtered);
+        // Filter for members marked as featured faculty
+        const filtered = res.data.filter(m => m.type === 'faculty' && m.featured).slice(0, 8);
+        // Fallback to any faculty if none are featured
+        const finalFaculty = filtered.length > 0 ? filtered : res.data.filter(m => m.type === 'faculty').slice(0, 8);
+        setFeaturedFaculty(finalFaculty);
       } catch (err) {
         console.error("Faculty fetch failed:", err);
       } finally {
@@ -47,13 +49,7 @@ const FeaturedFaculty = () => {
     }, 300);
   };
 
-  const nextFaculty = () => {
-    changeFaculty((prev) => (prev + 1) % featuredFaculty.length);
-  };
 
-  const prevFaculty = () => {
-    changeFaculty((prev) => (prev - 1 + featuredFaculty.length) % featuredFaculty.length);
-  };
 
   const getVisibleFaculty = () => {
     const visible = [];
@@ -114,7 +110,7 @@ const FeaturedFaculty = () => {
 
               return (
                 <div
-                  key={`${faculty.id}-${currentIndex}`}
+                  key={`${faculty._id || faculty.id}-${position}-${currentIndex}`}
                   className={`
                     transition-all duration-500 ease-out cursor-pointer
                     ${isCenter ? 'z-20' : isFirstTier ? 'z-10' : 'z-0'}

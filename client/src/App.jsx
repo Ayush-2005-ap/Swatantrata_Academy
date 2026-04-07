@@ -16,9 +16,10 @@ import EventDetail from "./programs/pages/EventDetail";
 import AdminLayout from './admin/AdminLayout';
 import AdminDashboard from './admin/pages/AdminDashboard';
 import AdminEvents from './admin/pages/AdminEvents';
-import AdminFaculty from './admin/pages/AdminFaculty';
-import AdminPrograms from './admin/pages/AdminPrograms';
 import AdminInquiries from './admin/pages/AdminInquiries';
+import AdminLandingPage from './admin/pages/AdminLandingPage';
+import AdminPrograms from './admin/pages/AdminPrograms';
+import AdminFaculty from './admin/pages/AdminFaculty';
 import LoginPage from './admin/LoginPage';
 import ProtectedRoute from './admin/ProtectedRoute';
 
@@ -48,7 +49,7 @@ function AppContent() {
         <Route path="/admin" element={<ProtectedRoute />}>
           <Route element={<AdminLayout />}>
              <Route index element={<AdminDashboard />} />
-             <Route path="settings" element={<AdminDashboard />} /> 
+             <Route path="landing" element={<AdminLandingPage />} /> 
              <Route path="events" element={<AdminEvents />} />
              <Route path="programs" element={<AdminPrograms />} /> 
              <Route path="faculty" element={<AdminFaculty />} />

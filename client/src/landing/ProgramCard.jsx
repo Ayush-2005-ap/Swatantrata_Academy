@@ -25,15 +25,17 @@ const ProgramCard = ({ program, isVisible, delay }) => {
             overflow-hidden
           "
         >
-          <img
-            src={`${program.logo.startsWith('http') || program.logo.startsWith('/') ? '' : BASE_URL}${program.logo}`}
-            alt={program.title}
-            className="
-              max-h-28 object-contain
-              transition-all duration-700
-              hover:scale-110
-            "
-          />
+          {program.logo ? (
+            <img
+              src={program.logo.startsWith('http') || program.logo.startsWith('/') ? program.logo : `${BASE_URL}${program.logo}`}
+              alt={program.title}
+              className="max-h-28 object-contain transition-all duration-700 hover:scale-110"
+            />
+          ) : (
+            <div className="w-24 h-24 bg-blue-50 text-blue-600 rounded-[2rem] flex items-center justify-center font-black italic shadow-inner border border-blue-100/50">
+               SA
+            </div>
+          )}
         </div>
   
         {/* Program Title */}

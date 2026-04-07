@@ -76,14 +76,16 @@ const programs = [
     title: 'iPolicy',
     description: 'Engage in cutting-edge research on liberal economic policies and governance.',
     iconName: 'BookOpen',
-    color: 'from-blue-500 to-cyan-500'
+    color: 'from-blue-500 to-cyan-500',
+    isMainProgram: true
   },
   {
     id: 'colloquium',
     title: 'Colloquium',
     description: 'Develop leadership skills through workshops. Learn from accomplished change-makers.',
     iconName: 'Users',
-    color: 'from-blue-600 to-indigo-500'
+    color: 'from-blue-600 to-indigo-500',
+    isMainProgram: true
   }
 ];
 

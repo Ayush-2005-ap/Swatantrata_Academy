@@ -1,31 +1,41 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
+import { API_BASE_URL } from "../config";
 
 const FloatingAnnouncement = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [announcement, setAnnouncement] = useState(null);
 
   useEffect(() => {
-    // ---- PLACEHOLDER FOR BACKEND INTEGRATION ----
-    // fetch('/api/announcements/active')
-    //   .then(res => res.json())
-    //   .then(data => {
-    //      if(data) {
-    //        setAnnouncement(data);
-    //        setIsVisible(true);
-    //      }
-    //   })
-    // ---------------------------------------------
+    const fetchSyncData = async () => {
+      try {
+        const [settingsRes, eventsRes] = await Promise.all([
+          axios.get(`${API_BASE_URL}/settings`),
+          axios.get(`${API_BASE_URL}/events`)
+        ]);
 
-    // Mock Backend data for a highly urgent/new announcement
-    setTimeout(() => {
-      setAnnouncement({
-        title: "New Program Launched!",
-        message: "Enrollments for the 2026 AI Ethics Batch are now open. Limited seats available.",
-        link: "/programs"
-      });
-      setIsVisible(true);
-    }, 1500); // 1.5 seconds after page load
+        const hasActiveEvents = eventsRes.data.some(e => e.isPast === false);
+        const globalVisible = settingsRes.data.UPCOMING_EVENTS_VISIBLE !== false;
+
+        // Condition: Show only if Admin allows AND there's something to announce
+        if (globalVisible && hasActiveEvents) {
+          const firstUpcoming = eventsRes.data.find(e => e.isPast === false);
+          setAnnouncement({
+            title: "New Program Launched!",
+            message: firstUpcoming ? `Upcoming: ${firstUpcoming.title} on ${firstUpcoming.date}` : "Enrollments for the next batch are now open.",
+            link: "/programs"
+          });
+          setIsVisible(true);
+        } else {
+          setIsVisible(false);
+        }
+      } catch (err) {
+        console.error("❌ [Announcement Sync]: Shielding offline.", err);
+      }
+    };
+    
+    fetchSyncData();
   }, []);
 
   return (

@@ -17,9 +17,22 @@ const ProgramsSection = () => {
     const fetchPrograms = async () => {
       try {
         const res = await axios.get(`${API_BASE_URL}/programs`);
-        setPrograms(res.data.slice(0, 3)); // Only show top 3 on home
+        console.log("⚡ [PROG-SYNC]: Total programs available:", res.data.length);
+        
+        // Filter based on your Main Program selection
+        let displayAds = res.data.filter(p => p.isMainProgram === true);
+        console.log("⚡ [PROG-SYNC]: Selected featured programs:", displayAds.length);
+
+        // Fail-safe fallback if nothing is chosen
+        if (displayAds.length === 0 && res.data.length > 0) {
+           console.warn("⚠️ [PROG-SYNC]: No featured programs found. Auto-populating latest.");
+           displayAds = res.data.slice(0, 3);
+        }
+        
+        setPrograms(displayAds);
+        setIsVisible(true); // Force reveal if data is present
       } catch (err) {
-        console.error("Programs fetch failed:", err);
+        console.error("❌ [PROG-SYNC]: Connection failed", err);
       } finally {
         setLoading(false);
       }
@@ -62,7 +75,7 @@ const ProgramsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-24">
           {programs.map((program, index) => (
             <ProgramCard
-              key={index}
+              key={program._id || program.id || index}
               program={program}
               isVisible={isVisible}
               delay={index * 180}

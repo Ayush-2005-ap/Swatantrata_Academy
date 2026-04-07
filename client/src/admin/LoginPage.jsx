@@ -19,7 +19,7 @@ const LoginPage = () => {
       const response = await axios.post(`${API_BASE_URL}/auth/login`, { email, password });
       localStorage.setItem("adminToken", response.data.token);
       localStorage.setItem("adminUser", JSON.stringify(response.data.user));
-      navigate("/"); // Redirect to the public website after login
+      navigate("/admin"); // Redirect directly to Admin Panel after successful login
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please check your credentials.");
     } finally {

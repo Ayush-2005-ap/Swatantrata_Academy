@@ -17,25 +17,29 @@ const UpcomingEventsSection = () => {
           axios.get(`${API_BASE_URL}/settings`)
         ]);
         
-        // Settings control the visibility
         if (settingsRes.data.UPCOMING_EVENTS_VISIBLE !== undefined) {
           setIsVisible(settingsRes.data.UPCOMING_EVENTS_VISIBLE);
         }
 
-        // Only show upcoming (isPast: false) events
-        const upcoming = eventsRes.data.filter(e => !e.isPast);
+        // STRICT LOGIC: Only show events explicitly marked as NOT past (isPast: false)
+        const upcoming = eventsRes.data.filter(e => e.isPast === false);
         setEvents(upcoming);
+        
       } catch (err) {
-        console.error("Failed to fetch upcoming events:", err);
+        console.error("❌ [Events Sync]: Data link failed:", err);
       } finally {
         setLoading(false);
       }
     };
+    
     fetchData();
+    // Live Sync: Re-check settings/data every 10 seconds for real-time feel
+    const interval = setInterval(fetchData, 10000);
+    return () => clearInterval(interval);
   }, []);
 
   if (loading) return null;
-  if (!isVisible || events.length === 0) return null;
+  if (!isVisible) return null;
 
   return (
     <section className="py-32 bg-white relative overflow-hidden">

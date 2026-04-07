@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { LayoutDashboard, Settings, Calendar, Users, LogOut, Globe, Mail } from "lucide-react";
+import { LayoutDashboard, Settings, Calendar, Users, LogOut, Globe, Mail, Monitor } from "lucide-react";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -13,11 +13,11 @@ const Sidebar = () => {
 
   const links = [
     { name: "Dashboard", path: "/admin", icon: LayoutDashboard },
+    { name: "Landing Architect", path: "/admin/landing", icon: Monitor },
     { name: "Programs", path: "/admin/programs", icon: Globe },
     { name: "Events", path: "/admin/events", icon: Calendar },
     { name: "Faculty", path: "/admin/faculty", icon: Users },
     { name: "Inbox", path: "/admin/inquiries", icon: Mail },
-    { name: "Settings", path: "/admin/settings", icon: Settings },
   ];
 
   return (

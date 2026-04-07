@@ -7,7 +7,10 @@ import {
   Trash2, 
   Search, 
   BookOpen,
-  Globe
+  Globe,
+  ToggleLeft,
+  ToggleRight,
+  Star
 } from "lucide-react";
 
 const AdminPrograms = () => {
@@ -24,7 +27,8 @@ const AdminPrograms = () => {
     duration: "",
     location: "",
     features: "",
-    logo: ""
+    logo: "",
+    isMainProgram: false
   });
   const [uploadingLogo, setUploadingLogo] = useState(false);
 
@@ -67,7 +71,8 @@ const AdminPrograms = () => {
         duration: program.duration || "",
         location: program.location || "",
         features: program.features ? program.features.join(", ") : "",
-        logo: program.logo || ""
+        logo: program.logo || "",
+        isMainProgram: program.isMainProgram || false
       });
     } else {
       setEditingProgram(null);
@@ -78,7 +83,8 @@ const AdminPrograms = () => {
         duration: "",
         location: "",
         features: "",
-        logo: ""
+        logo: "",
+        isMainProgram: false
       });
     }
     setIsModalOpen(true);
@@ -261,6 +267,25 @@ const AdminPrograms = () => {
                   <label className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">About / Description</label>
                   <textarea required placeholder="This program teaches the basics of public policy..." rows="4" className="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:outline-none"
                     value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} />
+                </div>
+
+                <div className="bg-indigo-50/50 p-6 rounded-[2rem] border border-indigo-100 flex items-center justify-between group">
+                   <div className="flex items-center space-x-4">
+                      <div className={`p-3 rounded-2xl ${formData.isMainProgram ? 'bg-amber-100 text-amber-600' : 'bg-white text-gray-400'} transition-colors`}>
+                         <Star size={24} className={formData.isMainProgram ? 'fill-current' : ''} />
+                      </div>
+                      <div>
+                         <h4 className="text-sm font-black text-gray-900 uppercase tracking-tight">Main Showcase</h4>
+                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Pin this program to the homepage "Explore" section</p>
+                      </div>
+                   </div>
+                   <button 
+                      type="button" 
+                      onClick={() => setFormData({...formData, isMainProgram: !formData.isMainProgram})}
+                      className={`transition-all duration-300 transform cursor-pointer ${formData.isMainProgram ? 'text-indigo-600' : 'text-gray-300'}`}
+                   >
+                      {formData.isMainProgram ? <ToggleRight size={48} /> : <ToggleLeft size={48} />}
+                   </button>
                 </div>
 
 
