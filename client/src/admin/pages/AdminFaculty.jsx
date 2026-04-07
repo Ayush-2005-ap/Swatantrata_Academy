@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { API_BASE_URL } from "../../config";
+import { API_BASE_URL, BASE_URL } from "../../config";
 import { 
   Users, 
   Trash2, 
@@ -224,11 +224,11 @@ const AdminFaculty = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {members.filter(m => m.type === filter).map((member) => (
                 <div key={member._id} className="bg-white rounded-3xl border border-gray-100 p-6 flex items-center space-x-6 relative group shadow-sm hover:shadow-md transition-all">
-                   <img 
-                      src={`${member.image.startsWith('http') || member.image.startsWith('/') ? '' : 'http://localhost:5050'}${member.image}`} 
-                      alt={member.name} 
-                      className="w-20 h-20 rounded-2xl object-cover ring-4 ring-blue-50"
-                   />
+                    <img 
+                       src={`${member.image.startsWith('http') || member.image.startsWith('/') ? '' : BASE_URL}${member.image}`} 
+                       alt={member.name} 
+                       className="w-20 h-20 rounded-2xl object-cover ring-4 ring-blue-50"
+                    />
                    <div className="flex-1">
                       <h4 className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{member.name}</h4>
                       <p className="text-sm text-gray-500 font-medium">{member.role}</p>

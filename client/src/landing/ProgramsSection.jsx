@@ -1,15 +1,31 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Loader2 } from 'lucide-react';
+import axios from 'axios';
+import { API_BASE_URL } from '../config';
 import ProgramCard from './ProgramCard';
 
 
 const ProgramsSection = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [programs, setPrograms] = useState([]);
+  const [loading, setLoading] = useState(true);
   const sectionRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const fetchPrograms = async () => {
+      try {
+        const res = await axios.get(`${API_BASE_URL}/programs`);
+        setPrograms(res.data.slice(0, 3)); // Only show top 3 on home
+      } catch (err) {
+        console.error("Programs fetch failed:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPrograms();
+
     const observer = new IntersectionObserver(
       ([entry]) => entry.isIntersecting && setIsVisible(true),
       { threshold: 0.2 }
@@ -19,23 +35,8 @@ const ProgramsSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  const programs = [
-    {
-      title: 'iPolicy for Young Leaders',
-      tag: 'Certificate Course',
-      logo: '/Logos/Logos1.png',
-    },
-    {
-      title: 'Colloquium',
-      tag: 'Main Program',
-      logo: '/Logos/Logos2.png',
-    },
-    {
-      title: 'Austrian Ecomoics Seminar',
-      tag: 'Main Program',
-      logo: '/Logos/Logos3.png',
-    },
-  ];
+  if (loading) return null;
+  if (programs.length === 0) return null;
 
   return (
     <section ref={sectionRef} className="py-28 relative bg-transparent">

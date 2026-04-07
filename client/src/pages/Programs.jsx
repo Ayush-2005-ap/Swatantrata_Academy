@@ -1,115 +1,44 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import axios from 'axios';
+import { API_BASE_URL, BASE_URL } from '../config';
 import {
   BookOpen,
-  Users,
-  Award,
-  Briefcase,
-  Calendar,
-  TrendingUp,
+  ArrowRight,
   Clock,
   MapPin,
-  ArrowRight,
+  Loader2
 } from 'lucide-react';
 
 const Programs = () => {
   const navigate = useNavigate();
+  const [programs, setPrograms] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    const fetchPrograms = async () => {
+      try {
+        const response = await axios.get(`${API_BASE_URL}/programs`);
+        setPrograms(response.data);
+      } catch (err) {
+        console.error("Error fetching programs:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPrograms();
   }, []);
 
-  const programs = [
-    {
-      id: 'ipolicy-young-leaders',
-      icon: BookOpen,
-      title: 'iPolicy ',
-      duration: '2-3 Days',
-      location: 'TBD',
-      description: 'Engage in cutting-edge research on liberal economic policies and governance.',
-      features: ['Stipend', 'Mentorship'],
-      color: 'from-blue-500 to-cyan-500',
-      logo: '/Logos/Logos1.png',
-    },
-    {
-      id: 'colloquium',
-      icon: Users,
-      title: 'Colloquium',
-      duration: '3 Days',
-      location: 'Multiple Cities',
-      description: 'Develop leadership skills through workshops. Learn from accomplished change-makers.',
-      features: ['Workshops', 'Mentoring'],
-      color: 'from-blue-600 to-indigo-500',
-      logo: '/Logos/Logos2.png',
-    },
-    {
-      id: 'aes',
-      icon: Award,
-      title: 'AES',
-      duration: '1-2 Days',
-      location: 'Online',
-      description: 'Competitive program for outstanding individuals committed to change and excellence.',
-      features: ['Scholarship', 'Training'],
-      color: 'from-sky-500 to-blue-600',
-      logo: '/Logos/Logos3.png',
-    },
-    {
-      id: 'epolicy-young-leaders',
-      icon: Briefcase,
-      title: 'ePolicy',
-      duration: '2-3 months',
-      location: 'New Delhi',
-      description: 'Hands-on experience in policy analysis and advocacy. Perfect for student careers.',
-      features: ['Project Work', 'Certificate'],
-      color: 'from-indigo-500 to-blue-700',
-      logo: '/Logos/Logos5.png',
-    },
-    {
-      id: 'policy-camp',
-      icon: Calendar,
-      title: 'Policy Camp',
-      duration: '2 weeks',
-      location: 'Various',
-      description: 'Intensive training program covering policy fundamentals and advocacy strategies.',
-      features: ['Expert Sessions', 'Projects'],
-      color: 'from-blue-400 to-cyan-600',
-      logo: '/Logos/Logos4.png',
-    },
-    {
-      id: 'mooc',
-      icon: TrendingUp,
-      title: 'MOOC',
-      duration: '1 month',
-      location: 'New Delhi',
-      description: 'Advanced program for professionals seeking to deepen policy expertise.',
-      features: ['Coaching', 'Network Building'],
-      color: 'from-sky-500 to-indigo-500',
-      logo: '/Logos/Logos6.png',
-    },
-    {
-      id: 'master-class',
-      icon: Users,
-      title: 'Master Class',
-      duration: 'Ongoing',
-      location: 'Various Locations',
-      description: 'Engage with communities to understand grassroots issues and develop solutions.',
-      features: ['Field Visits', 'Assessment'],
-      color: 'from-blue-500 to-sky-400',
-      logo: '/Logos/Logos7.png',
-    },
-    {
-      id: 'credit-courses',
-      icon: BookOpen,
-      title: 'Credit Courses',
-      duration: 'Self-paced',
-      location: 'Online',
-      description: 'Flexible online courses covering various aspects of public policy and economics.',
-      features: ['Flexible Learning', 'Certification'],
-      color: 'from-indigo-600 to-blue-500',
-      logo: '/Logos/Logos8.png',
-    },
-  ];
+  if (loading) {
+    return (
+      <div className="pt-40 min-h-screen bg-slate-50 flex flex-col items-center">
+        <Loader2 className="w-12 h-12 text-blue-600 animate-spin mb-4" />
+        <p className="text-gray-500 font-bold uppercase tracking-widest animate-pulse">Syncing Academic Catalogs...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="pt-20 min-h-screen bg-slate-50">
@@ -159,7 +88,7 @@ const Programs = () => {
                 <div className="mb-4">
                   <div className="w-full h-16 rounded-xl flex items-center justify-start">
                     <img
-                      src={program.logo}
+                      src={`${program.logo.startsWith('http') || program.logo.startsWith('/') ? '' : BASE_URL}${program.logo}`}
                       alt={`${program.title} logo`}
                       className="max-h-12 object-contain transition-all duration-500 group-hover:scale-105"
                     />

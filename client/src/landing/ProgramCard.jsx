@@ -1,3 +1,5 @@
+import { BASE_URL } from "../config";
+
 const ProgramCard = ({ program, isVisible, delay }) => {
     return (
       <div
@@ -24,7 +26,7 @@ const ProgramCard = ({ program, isVisible, delay }) => {
           "
         >
           <img
-            src={program.logo}
+            src={`${program.logo.startsWith('http') || program.logo.startsWith('/') ? '' : BASE_URL}${program.logo}`}
             alt={program.title}
             className="
               max-h-28 object-contain

@@ -13,8 +13,9 @@ const ContactUs = () => {
     });
 
     useEffect(() => {
-        setIsVisible(true);
+        const timer = setTimeout(() => setIsVisible(true), 100);
         window.scrollTo(0, 0);
+        return () => clearTimeout(timer);
     }, []);
 
     const handleChange = (e) => {
@@ -41,7 +42,7 @@ const ContactUs = () => {
           const data = await res.json();
       
           alert(data.message);
-        } catch (error) {
+        } catch {
           alert("Something went wrong");
         }
       };

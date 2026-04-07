@@ -1,16 +1,34 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Linkedin } from "lucide-react";
-import { facultyData } from "../data/faculty";
+import { Linkedin, Loader2 } from "lucide-react";
+import axios from "axios";
+import { API_BASE_URL, BASE_URL } from "../config";
 import useRevealOnScroll from "../hooks/useRevealOnScroll";
 
 const FeaturedFaculty = () => {
   const navigate = useNavigate();
   const { ref, isVisible } = useRevealOnScroll(0.2);
 
-  const featuredFaculty = facultyData.slice(0, 6);
+  const [featuredFaculty, setFeaturedFaculty] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+
+  useEffect(() => {
+    const fetchFaculty = async () => {
+      try {
+        const res = await axios.get(`${API_BASE_URL}/members`);
+        // Filter for featured faculty members
+        const filtered = res.data.filter(m => m.type === 'faculty').slice(0, 8);
+        setFeaturedFaculty(filtered);
+      } catch (err) {
+        console.error("Faculty fetch failed:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFaculty();
+  }, []);
 
   // Auto-scroll every 4 seconds
   useEffect(() => {
@@ -50,6 +68,16 @@ const FeaturedFaculty = () => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  if (loading) {
+    return (
+      <div className="py-24 flex items-center justify-center">
+        <Loader2 className="w-10 h-10 text-primary animate-spin" />
+      </div>
+    );
+  }
+
+  if (featuredFaculty.length === 0) return null;
+
   return (
     <section ref={ref} className="py-24 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4">
@@ -79,11 +107,10 @@ const FeaturedFaculty = () => {
                 isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
               } ${isTransitioning ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}
           >
-            {getVisibleFaculty().map((faculty, idx) => {
+            {getVisibleFaculty().map((faculty) => {
               const position = faculty.displayIndex; // -2, -1, 0, 1, 2
               const isCenter = position === 0;
               const isFirstTier = Math.abs(position) === 1; // Adjacent cards
-              const isSecondTier = Math.abs(position) === 2; // Outer cards
 
               return (
                 <div
@@ -109,7 +136,7 @@ const FeaturedFaculty = () => {
                     <div className="relative group">
                       <div className="aspect-square overflow-hidden">
                         <img
-                          src={faculty.image}
+                          src={`${faculty.image.startsWith('http') || faculty.image.startsWith('/') ? '' : BASE_URL}${faculty.image}`}
                           alt={faculty.name}
                           className={`w-full h-full object-cover transition-all duration-700
                             ${isCenter ? '' : 'grayscale'}

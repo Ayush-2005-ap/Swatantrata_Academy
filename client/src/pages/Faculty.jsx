@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Linkedin } from 'lucide-react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL, BASE_URL } from '../config';
 
 const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
   const [facultyData, setFacultyData] = useState([]);
@@ -83,7 +83,7 @@ const Faculty = ({ showFeaturedOnly = false, limit = null }) => {
 
                   {/* Background Image: Starts grayscale, fades to color on hover */}
                   <img
-                    src={`${faculty.image.startsWith('http') || faculty.image.startsWith('/') ? '' : 'http://localhost:5050'}${faculty.image}`}
+                    src={`${faculty.image.startsWith('http') || faculty.image.startsWith('/') ? '' : BASE_URL}${faculty.image}`}
                     alt={faculty.name}
                     className="absolute inset-0 w-full h-full object-cover object-center grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700 ease-in-out"
                   />

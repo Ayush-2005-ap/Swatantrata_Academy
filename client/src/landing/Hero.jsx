@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { API_BASE_URL } from "../config";
+import { API_BASE_URL, BASE_URL } from "../config";
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const Hero = () => {
         muted
         playsInline
         className="absolute top-0 left-0 w-full h-full object-cover"
-        src={videoUrl} 
+        src={videoUrl.startsWith('http') || videoUrl.startsWith('/') ? videoUrl : `${BASE_URL}${videoUrl}`} 
       />
 
       {/* Hero Content */}

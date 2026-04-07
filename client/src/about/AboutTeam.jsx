@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL, BASE_URL } from '../config';
 
 const AboutTeam = () => {
   const [team, setTeam] = useState([]);
@@ -40,7 +40,7 @@ const AboutTeam = () => {
                        overflow-hidden focus-within:ring-2 ring-blue-500"
           >
             <img
-              src={`${member.image.startsWith('http') || member.image.startsWith('/') ? '' : 'http://localhost:5050'}${member.image}`}
+              src={`${member.image.startsWith('http') || member.image.startsWith('/') ? '' : BASE_URL}${member.image}`}
               alt={`${member.name} – ${member.role}`}
               loading="lazy"
               sizes="(max-width: 1024px) 50vw, 20vw"

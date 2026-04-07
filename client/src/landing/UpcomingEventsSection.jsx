@@ -1,122 +1,114 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import axios from "axios";
+import { API_BASE_URL } from "../config";
+import { Calendar as CalendarIcon, Clock, ArrowRight } from "lucide-react";
 
 const UpcomingEventsSection = () => {
-  // Mock State: Later this will be fetched from the backend (e.g. GET /api/events/active)
   const [events, setEvents] = useState([]);
+  const [isVisible, setIsVisible] = useState(true); // From Admin Settings
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // ---- PLACEHOLDER FOR BACKEND INTEGRATION ----
-    // async function fetchUpcomingEvents() {
-    //   try {
-    //     const response = await fetch('/api/events?active=true');
-    //     const data = await response.json();
-    //     setEvents(data);
-    //   } catch (error) {
-    //     console.error("Failed to fetch events:", error);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // }
-    // fetchUpcomingEvents();
-    // ---------------------------------------------
+    const fetchData = async () => {
+      try {
+        const [eventsRes, settingsRes] = await Promise.all([
+          axios.get(`${API_BASE_URL}/events`),
+          axios.get(`${API_BASE_URL}/settings`)
+        ]);
+        
+        // Settings control the visibility
+        if (settingsRes.data.UPCOMING_EVENTS_VISIBLE !== undefined) {
+          setIsVisible(settingsRes.data.UPCOMING_EVENTS_VISIBLE);
+        }
 
-    // Mocking a response from backend where the Admin has published 2 upcoming events
-    const mockDbEvents = [
-      {
-        _id: "1",
-        title: "Swatantrata Symposium 2026",
-        date: "April 15, 2026",
-        description: "Join us for our annual symposium focusing on global tech trends and ethical AI.",
-        imageUrl: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&auto=format&fit=crop&q=60",
-        isActive: true,
-      },
-      {
-        _id: "2",
-        title: "Tech Innovation Workshop",
-        date: "May 02, 2026",
-        description: "A hands-on workshop led by industry experts covering advanced full-stack development.",
-        imageUrl: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&auto=format&fit=crop&q=60",
-        isActive: true,
+        // Only show upcoming (isPast: false) events
+        const upcoming = eventsRes.data.filter(e => !e.isPast);
+        setEvents(upcoming);
+      } catch (err) {
+        console.error("Failed to fetch upcoming events:", err);
+      } finally {
+        setLoading(false);
       }
-    ];
-
-    setTimeout(() => {
-      setEvents(mockDbEvents);
-      setLoading(false);
-    }, 500);
+    };
+    fetchData();
   }, []);
 
-  // Strict rule: if there are no active events, return nothing (hidden from client)
-  if (!loading && events.length === 0) {
-    return null;
-  }
+  if (loading) return null;
+  if (!isVisible || events.length === 0) return null;
 
   return (
-    <section className="py-24 bg-white relative">
+    <section className="py-32 bg-white relative overflow-hidden">
+      {/* Decorative glassmorphic bubble */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-50/50 rounded-full blur-3xl -z-10 translate-x-20 -translate-y-20"></div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 1 }}
+          className="text-center mb-20"
         >
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
-             Upcoming <span className="text-primary">Events</span>
+          <div className="inline-flex items-center space-x-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full font-black text-xs uppercase tracking-widest mb-6 border border-blue-100">
+             <CalendarIcon size={14} />
+             <span>Calendar 2024-25</span>
+          </div>
+          <h2 className="text-5xl md:text-6xl font-black text-gray-900 mb-6 tracking-tighter">
+             Upcoming <span className="text-blue-600">Events</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover our upcoming workshops, seminars, and special events. These are exclusively published by our administration.
+          <p className="text-xl text-gray-500 max-w-2xl mx-auto font-medium">
+            Step into the arena of ideas. Join our upcoming workshops and symposia designed for policy thinkers.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {events.map((event, index) => (
             <motion.div
               key={event._id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="group relative rounded-3xl overflow-hidden shadow-lg hover:shadow-primary/30 transition-all duration-300 bg-white border border-gray-100 flex flex-col sm:flex-row h-full"
+              transition={{ duration: 0.8, delay: index * 0.15 }}
+              className="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500 flex flex-col md:flex-row h-full"
             >
-               {/* Event Image */}
-               <div className="w-full sm:w-2/5 h-48 sm:h-auto relative overflow-hidden">
-                 <img 
-                    src={event.imageUrl} 
-                    alt={event.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" 
-                 />
-                 <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent sm:hidden"></div>
-                 <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm text-primary font-bold px-3 py-1 rounded-full text-xs sm:hidden shadow-md">
-                    {event.date}
-                 </div>
-               </div>
-
-               {/* Event Details */}
-               <div className="w-full sm:w-3/5 p-6 md:p-8 flex flex-col justify-center bg-linear-to-br from-white to-slate-50">
-                  <div className="hidden sm:inline-block mb-3">
-                     <span className="bg-primary/10 text-primary font-semibold px-4 py-1.5 rounded-full text-sm">
-                        {event.date}
+               {/* Event Content */}
+               <div className="flex-1 p-8 md:p-10 flex flex-col">
+                  <div className="flex items-center space-x-3 mb-6">
+                     <span className="bg-indigo-600 text-white font-black px-4 py-1.5 rounded-full text-[10px] uppercase tracking-widest">
+                        {event.programId}
                      </span>
                   </div>
-                  <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
+                  
+                  <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-4 group-hover:text-blue-600 transition-colors leading-tight">
                      {event.title}
                   </h3>
-                  <p className="text-gray-600 mb-6 line-clamp-3">
-                     {event.description}
+                  
+                  <p className="text-gray-500 mb-8 font-medium leading-relaxed line-clamp-3">
+                     {event.about}
                   </p>
                   
-                  <div className="mt-auto">
-                      <button className="flex items-center text-primary font-semibold hover:text-primary-dark transition-colors gap-2 group-hover:gap-3 ease-out duration-300">
-                         Register Now 
-                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-4 h-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                         </svg>
+                  <div className="mt-auto space-y-6">
+                      <div className="flex items-center space-x-6 text-sm">
+                         <div className="flex items-center space-x-2 text-gray-400 font-bold uppercase tracking-widest text-[10px]">
+                            <CalendarIcon size={16} className="text-blue-600" />
+                            <span>{event.date}</span>
+                         </div>
+                         <div className="flex items-center space-x-2 text-gray-400 font-bold uppercase tracking-widest text-[10px]">
+                            <Clock size={16} className="text-blue-600" />
+                            <span>Full Day</span>
+                         </div>
+                      </div>
+
+                      <button className="flex items-center text-blue-600 font-black gap-2 group/btn cursor-pointer">
+                         <span className="uppercase tracking-widest text-xs">Learn More & Register</span> 
+                         <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform duration-300" />
                       </button>
                   </div>
                </div>
+
+               {/* Right Decoration Bar */}
+               <div className="w-2 bg-indigo-600 group-hover:w-4 transition-all duration-300"></div>
             </motion.div>
           ))}
         </div>
@@ -126,3 +118,4 @@ const UpcomingEventsSection = () => {
 };
 
 export default UpcomingEventsSection;
+
