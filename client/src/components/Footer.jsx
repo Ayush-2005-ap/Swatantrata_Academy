@@ -15,11 +15,11 @@ export default function Footer() {
 
           {/* BRAND */}
           <div className="animate-fadeUp delay-100">
-            <div className="flex flex-col leading-tight mb-4">
-              <span className="text-2xl font-bold tracking-wide">SWATANTRA</span>
-              <span className="text-xl font-semibold tracking-widest opacity-95">
-                ACADEMY
+            <div className="flex flex-col bg-white backdrop-blur-sm border border-white/20 rounded-2xl p-5 leading-tight mb-4">
+              <span className="text-2xl font-bold tracking-wide">
+                <img src="/swatantra_academy_logo.png" alt="Swatantra Academy Logo" />
               </span>
+              
             </div>
 
             <p className="text-white/90 leading-relaxed mb-6">
