@@ -122,8 +122,8 @@ export default function LegalPage() {
       {/* Hero */}
       <div className="bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <div className="flex justify-center mb-6">
-            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-4">
+          <div className="flex justify-center mb-6 mt-5">
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-5">
               <Shield size={36} className="text-blue-200" />
             </div>
           </div>
