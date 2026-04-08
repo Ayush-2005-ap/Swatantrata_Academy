@@ -23,9 +23,7 @@ const Sidebar = () => {
   return (
     <div className="w-64 bg-slate-100 border-r border-gray-200 h-screen flex flex-col pt-8">
       <div className="px-6 mb-10">
-        <h1 className="text-xl font-extrabold text-blue-900 tracking-tighter">
-          SA ADMIN <span className="text-primary font-normal">PANEL</span>
-        </h1>
+        <span><img src="/swatantra_academy_logo.png" alt="Swatantra Academy Logo" /></span>
       </div>
 
       <nav className="flex-1 px-4 space-y-2">
