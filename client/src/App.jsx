@@ -12,6 +12,7 @@ import ChatBot from './chatbot/ChatBot';
 import Faculty from './pages/Faculty';
 import ProgramDetail from "./programs/pages/ProgramDetail";
 import EventDetail from "./programs/pages/EventDetail";
+import { BASE_URL } from './config';
 
 // 🏆 Admin Imports
 import AdminLayout from './admin/AdminLayout';
@@ -23,6 +24,13 @@ import AdminPrograms from './admin/pages/AdminPrograms';
 import AdminFaculty from './admin/pages/AdminFaculty';
 import LoginPage from './admin/LoginPage';
 import ProtectedRoute from './admin/ProtectedRoute';
+
+// 🔥 Silent keep-alive: Wakes up the Render backend on first app load
+// so components never hit a cold-start timeout
+if (import.meta.env.PROD) {
+  fetch(`${BASE_URL}/health`).catch(() => {});
+}
+
 
 function AppContent() {
   const location = useLocation();

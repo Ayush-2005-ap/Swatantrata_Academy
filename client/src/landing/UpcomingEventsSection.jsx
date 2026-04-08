@@ -10,6 +10,8 @@ const UpcomingEventsSection = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let interval = null;
+
     const fetchData = async () => {
       try {
         const [eventsRes, settingsRes] = await Promise.all([
@@ -24,18 +26,37 @@ const UpcomingEventsSection = () => {
         // STRICT LOGIC: Only show events explicitly marked as NOT past (isPast: false)
         const upcoming = eventsRes.data.filter(e => e.isPast === false);
         setEvents(upcoming);
-        
+
+        // ✅ Only start live-sync polling AFTER a successful first fetch
+        if (!interval) {
+          interval = setInterval(async () => {
+            try {
+              const [eRes, sRes] = await Promise.all([
+                axios.get(`${API_BASE_URL}/events`),
+                axios.get(`${API_BASE_URL}/settings`)
+              ]);
+              if (sRes.data.UPCOMING_EVENTS_VISIBLE !== undefined) {
+                setIsVisible(sRes.data.UPCOMING_EVENTS_VISIBLE);
+              }
+              setEvents(eRes.data.filter(e => e.isPast === false));
+            } catch {
+              // Silently skip — backend temporarily unreachable, no console spam
+            }
+          }, 60000); // 60s interval — much gentler on the server
+        }
+
       } catch (err) {
-        console.error("❌ [Events Sync]: Data link failed:", err);
+        // Only log on the initial fetch failure, not on every poll retry
+        if (import.meta.env.DEV) {
+          console.warn("⚠️ [Events]: Backend offline or slow, will retry next load.", err.message);
+        }
       } finally {
         setLoading(false);
       }
     };
     
     fetchData();
-    // Live Sync: Re-check settings/data every 10 seconds for real-time feel
-    const interval = setInterval(fetchData, 10000);
-    return () => clearInterval(interval);
+    return () => { if (interval) clearInterval(interval); };
   }, []);
 
   if (loading) return null;
