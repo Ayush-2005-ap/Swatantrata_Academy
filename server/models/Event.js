@@ -26,6 +26,14 @@ const EventSchema = new mongoose.Schema({
   about: {
     type: String, // The textual summary
     required: true
+  },
+  bannerImage: {
+    type: String,
+    default: ''
+  },
+  registrationLink: {
+    type: String,
+    default: ''
   }
 }, { timestamps: true });
 

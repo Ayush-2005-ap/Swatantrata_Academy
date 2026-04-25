@@ -41,6 +41,10 @@ const ProgramSchema = new mongoose.Schema({
   isMainProgram: {
     type: Boolean,
     default: false // Whether the program is showcased on the landing page
+  },
+  bannerImage: {
+    type: String,
+    default: ''
   }
 }, { timestamps: true });
 

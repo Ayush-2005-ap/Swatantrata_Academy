@@ -25,8 +25,11 @@ const AdminEvents = () => {
     title: "",
     date: "",
     about: "",
-    isPast: false
+    isPast: false,
+    bannerImage: "",
+    registrationLink: ""
   });
+  const [uploadingBanner, setUploadingBanner] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -70,11 +73,13 @@ const AdminEvents = () => {
         title: event.title,
         date: event.date,
         about: event.about,
-        isPast: event.isPast
+        isPast: event.isPast,
+        bannerImage: event.bannerImage || "",
+        registrationLink: event.registrationLink || ""
       });
     } else {
       setEditingEvent(null);
-      setFormData({ id: "", programId: "", title: "", date: "", about: "", isPast: false });
+      setFormData({ id: "", programId: "", title: "", date: "", about: "", isPast: false, bannerImage: "", registrationLink: "" });
     }
     setIsModalOpen(true);
   };
@@ -96,6 +101,31 @@ const AdminEvents = () => {
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || "Failed to save event.");
+    }
+  };
+
+  const handleBannerUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const data = new FormData();
+    data.append("media", file);
+
+    setUploadingBanner(true);
+    try {
+      const token = localStorage.getItem("adminToken");
+      const res = await axios.post(`${API_BASE_URL}/settings/upload`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setFormData(prev => ({ ...prev, bannerImage: res.data.mediaUrl }));
+    } catch (err) {
+      console.error("Upload failed", err);
+      alert("Failed to upload banner.");
+    } finally {
+      setUploadingBanner(false);
     }
   };
 
@@ -159,9 +189,13 @@ const AdminEvents = () => {
           {filteredEvents.map((event) => (
             <div key={event._id} className="grid grid-cols-12 p-6 hover:bg-slate-50 transition-colors items-center group">
                <div className="col-span-5 flex items-center space-x-4">
-                  <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 font-black">
-                     {event.date.slice(-4)}
-                  </div>
+                  {event.bannerImage ? (
+                    <img src={event.bannerImage} className="w-12 h-12 object-cover rounded-xl" alt="" />
+                  ) : (
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600 font-black">
+                       {event.date.slice(-4)}
+                    </div>
+                  )}
                   <div>
                     <h4 className="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{event.title}</h4>
                     <div className="flex items-center space-x-2 text-gray-400 text-sm mt-1">
@@ -248,6 +282,40 @@ const AdminEvents = () => {
                       <option value="true">Past Archive</option>
                     </select>
                   </div>
+                </div>
+
+                <div>
+                  <label className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Event Banner Image</label>
+                  <div className="flex flex-col space-y-4">
+                    {formData.bannerImage && (
+                      <div className="relative w-full h-32 rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
+                        <img src={formData.bannerImage} alt="Banner" className="w-full h-full object-cover" />
+                        <button 
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, bannerImage: "" }))}
+                          className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    )}
+                    <div className="flex items-center space-x-4">
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={handleBannerUpload} 
+                        disabled={uploadingBanner} 
+                        className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" 
+                      />
+                      {uploadingBanner && <span className="text-xs text-blue-500 font-bold animate-pulse">Uploading Banner...</span>}
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Registration Link (Typeform)</label>
+                  <input type="text" placeholder="https://form.typeform.com/..." className="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                    value={formData.registrationLink} onChange={e => setFormData({...formData, registrationLink: e.target.value})} />
                 </div>
 
                 <div>

@@ -48,8 +48,11 @@ const ProgramDetail = () => {
     );
   }
 
+  const activeEvents = events.filter(e => !e.isPast);
+  const pastEvents = events.filter(e => e.isPast);
+
   return (
-    <div className="pt-20 min-h-screen bg-gray-50">
+    <div className="pt-20 min-h-screen bg-gray-50 pb-20">
       {/* Header */}
       <div className="bg-gradient-to-br from-blue-800 to-blue-900 py-16">
         <div className="max-w-6xl mx-auto px-4 text-white">
@@ -70,41 +73,107 @@ const ProgramDetail = () => {
         </div>
       </div>
 
+      {/* Active Programs / Registration */}
+      {activeEvents.length > 0 && (
+        <div className="max-w-6xl mx-auto px-4 py-12">
+          <h2 className="text-3xl font-bold text-gray-900 mb-8 flex items-center">
+            <span className="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></span>
+            Active Programs
+          </h2>
+          <div className="grid grid-cols-1 gap-6">
+            {activeEvents.map(event => (
+              <div 
+                key={event.id}
+                className="bg-white border-2 border-blue-100 rounded-2xl shadow-sm overflow-hidden flex flex-col md:flex-row"
+              >
+                {event.bannerImage && (
+                  <div className="md:w-1/3 h-48 md:h-auto overflow-hidden">
+                    <img 
+                      src={event.bannerImage} 
+                      alt={event.title} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                <div className="p-8 flex-1 flex flex-col justify-center">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">{event.title}</h3>
+                  <div className="flex items-center text-gray-600 mb-6">
+                    <Calendar size={18} className="mr-2" />
+                    <span>{event.date}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-4">
+                    <button
+                      onClick={() => navigate(`/programs/${programId}/events/${event.id}`)}
+                      className="px-6 py-3 bg-gray-100 text-gray-800 rounded-lg font-semibold hover:bg-gray-200 transition-colors"
+                    >
+                      View Details
+                    </button>
+                    {event.registrationLink && (
+                      <a 
+                        href={event.registrationLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-8 py-3 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200 flex items-center"
+                      >
+                        Register Now
+                        <ArrowRight size={18} className="ml-2" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Past Events */}
-      <div className="max-w-6xl mx-auto px-4 py-20">
+      <div className="max-w-6xl mx-auto px-4 py-12">
         <h2 className="text-3xl font-bold text-gray-900 mb-10">
           Past Events
         </h2>
 
-        {events.length === 0 ? (
+        {pastEvents.length === 0 ? (
           <p className="text-gray-600">
-            No events have been conducted yet under this program.
+            No past events to display.
           </p>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {events.map(event => (
+          <div className="grid grid-cols-1 gap-6">
+            {pastEvents.map(event => (
               <div
                 key={event.id}
-                className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 p-6"
+                onClick={() => navigate(`/programs/${programId}/events/${event.id}`)}
+                className="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all duration-300 overflow-hidden flex items-center cursor-pointer group"
               >
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {event.title}
-                </h3>
-
-                <div className="flex items-center space-x-2 text-gray-600 mb-4">
-                  <Calendar size={16} />
-                  <span>{event.date}</span>
+                {/* Poster Image Box */}
+                <div className="w-24 h-24 sm:w-32 sm:h-32 flex-shrink-0 bg-gray-100 overflow-hidden m-4 rounded-lg border border-gray-100">
+                  {event.bannerImage ? (
+                    <img 
+                      src={event.bannerImage} 
+                      alt={event.title} 
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-gray-300">
+                      <Calendar size={32} />
+                    </div>
+                  )}
                 </div>
 
-                <button
-                  onClick={() =>
-                    navigate(`/programs/${programId}/events/${event.id}`)
-                  }
-                  className="inline-flex hover:cursor-pointer items-center space-x-2 text-blue-600 font-semibold hover:text-blue-800"
-                >
-                  <span>View Event Details</span>
-                  <ArrowRight size={16} />
-                </button>
+                {/* Event Info */}
+                <div className="flex-1 py-4 pr-6 flex flex-col justify-center">
+                  <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
+                    {event.title}
+                  </h3>
+                  <div className="flex items-center space-x-2 text-gray-500 text-sm">
+                    <Calendar size={14} />
+                    <span>{event.date}</span>
+                  </div>
+                </div>
+
+                <div className="hidden sm:flex pr-8 text-gray-300 group-hover:text-blue-400 transform group-hover:translate-x-1 transition-all">
+                  <ArrowRight size={24} />
+                </div>
               </div>
             ))}
           </div>

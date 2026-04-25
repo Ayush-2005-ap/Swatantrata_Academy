@@ -28,9 +28,11 @@ const AdminPrograms = () => {
     location: "",
     features: "",
     logo: "",
-    isMainProgram: false
+    isMainProgram: false,
+    bannerImage: ""
   });
   const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingBanner, setUploadingBanner] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -72,7 +74,8 @@ const AdminPrograms = () => {
         location: program.location || "",
         features: program.features ? program.features.join(", ") : "",
         logo: program.logo || "",
-        isMainProgram: program.isMainProgram || false
+        isMainProgram: program.isMainProgram || false,
+        bannerImage: program.bannerImage || ""
       });
     } else {
       setEditingProgram(null);
@@ -84,7 +87,8 @@ const AdminPrograms = () => {
         location: "",
         features: "",
         logo: "",
-        isMainProgram: false
+        isMainProgram: false,
+        bannerImage: ""
       });
     }
     setIsModalOpen(true);
@@ -137,6 +141,31 @@ const AdminPrograms = () => {
       alert("Failed to upload logo.");
     } finally {
       setUploadingLogo(false);
+    }
+  };
+
+  const handleBannerUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const data = new FormData();
+    data.append("media", file);
+
+    setUploadingBanner(true);
+    try {
+      const token = localStorage.getItem("adminToken");
+      const res = await axios.post(`${API_BASE_URL}/settings/upload`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setFormData(prev => ({ ...prev, bannerImage: res.data.mediaUrl }));
+    } catch (err) {
+      console.error("Upload failed", err);
+      alert("Failed to upload banner.");
+    } finally {
+      setUploadingBanner(false);
     }
   };
 
@@ -193,9 +222,13 @@ const AdminPrograms = () => {
            <div key={program._id} className="bg-white rounded-3xl p-6 border border-gray-100 shadow-sm hover:shadow-xl transition-all group relative overflow-hidden">
                <div className={`absolute top-0 left-0 w-full h-2 bg-gradient-to-r ${program.color || 'from-gray-300 to-gray-400'}`}></div>
                <div className="flex justify-between items-start mb-4 mt-2">
-                 <div className={`w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center`}>
-                    <BookOpen size={24} className="text-gray-700" />
-                 </div>
+                 {program.bannerImage ? (
+                   <img src={program.bannerImage} className="w-12 h-12 object-cover rounded-xl" alt="" />
+                 ) : (
+                   <div className={`w-12 h-12 bg-gray-50 rounded-xl flex items-center justify-center`}>
+                      <BookOpen size={24} className="text-gray-700" />
+                   </div>
+                 )}
                  <div className="flex space-x-2">
                     <button onClick={() => handleOpenModal(program)} className="p-2 text-gray-400 hover:text-blue-600 transition-colors bg-gray-50 rounded-full"><Edit3 size={16} /></button>
                     <button onClick={() => handleDelete(program._id)} className="p-2 text-gray-400 hover:text-red-500 transition-colors bg-gray-50 rounded-full"><Trash2 size={16} /></button>
@@ -242,6 +275,34 @@ const AdminPrograms = () => {
                   <label className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Display Title</label>
                   <input type="text" required placeholder="e.g. iPolicy for Young Leaders" className="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-indigo-600 focus:outline-none"
                     value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} />
+                </div>
+
+                <div className="w-full">
+                  <label className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Program Banner Image</label>
+                  <div className="flex flex-col space-y-4">
+                    {formData.bannerImage && (
+                      <div className="relative w-full h-32 rounded-xl overflow-hidden border border-gray-200 bg-gray-50">
+                        <img src={formData.bannerImage} alt="Banner" className="w-full h-full object-cover" />
+                        <button 
+                          type="button"
+                          onClick={() => setFormData(prev => ({ ...prev, bannerImage: "" }))}
+                          className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    )}
+                    <div className="flex items-center space-x-4">
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={handleBannerUpload} 
+                        disabled={uploadingBanner} 
+                        className="text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" 
+                      />
+                      {uploadingBanner && <span className="text-xs text-blue-500 font-bold animate-pulse">Uploading Banner...</span>}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 gap-6">
