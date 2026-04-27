@@ -9,6 +9,16 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     const events = await Event.find();
+    const now = new Date();
+    
+    // Auto-archive check
+    for (let i = 0; i < events.length; i++) {
+      if (!events[i].isPast && events[i].endDate && now >= new Date(events[i].endDate)) {
+        events[i].isPast = true;
+        await Event.findByIdAndUpdate(events[i]._id, { isPast: true });
+      }
+    }
+    
     res.json(events);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -19,6 +29,16 @@ router.get('/', async (req, res) => {
 router.get('/program/:programId', async (req, res) => {
   try {
     const events = await Event.find({ programId: req.params.programId });
+    const now = new Date();
+    
+    // Auto-archive check
+    for (let i = 0; i < events.length; i++) {
+      if (!events[i].isPast && events[i].endDate && now >= new Date(events[i].endDate)) {
+        events[i].isPast = true;
+        await Event.findByIdAndUpdate(events[i]._id, { isPast: true });
+      }
+    }
+    
     res.json(events);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -46,7 +66,11 @@ router.post('/', protect, upload.single('banner'), async (req, res) => {
       console.log('Uploaded new banner for fresh event:', bannerImage);
     }
     
-    const eventData = { ...req.body, bannerImage };
+    const eventData = { 
+      ...req.body, 
+      bannerImage,
+      endDate: req.body.endDate ? new Date(req.body.endDate) : null 
+    };
     const event = new Event(eventData);
     const newEvent = await event.save();
     res.status(201).json(newEvent);
@@ -73,7 +97,8 @@ router.put('/:id', protect, upload.single('banner'), async (req, res) => {
 
     const updateData = {
       ...req.body,
-      bannerImage
+      bannerImage,
+      endDate: req.body.endDate ? new Date(req.body.endDate) : null
     };
 
     const updatedEvent = await Event.findByIdAndUpdate(req.params.id, updateData, { new: true });

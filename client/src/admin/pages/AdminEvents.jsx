@@ -24,6 +24,7 @@ const AdminEvents = () => {
     programId: "",
     title: "",
     date: "",
+    endDate: "",
     about: "",
     isPast: false,
     bannerImage: "",
@@ -72,6 +73,7 @@ const AdminEvents = () => {
         programId: event.programId,
         title: event.title,
         date: event.date,
+        endDate: event.endDate ? event.endDate.split('T')[0] : "",
         about: event.about,
         isPast: event.isPast,
         bannerImage: event.bannerImage || "",
@@ -79,7 +81,7 @@ const AdminEvents = () => {
       });
     } else {
       setEditingEvent(null);
-      setFormData({ id: "", programId: "", title: "", date: "", about: "", isPast: false, bannerImage: "", registrationLink: "" });
+      setFormData({ id: "", programId: "", title: "", date: "", endDate: "", about: "", isPast: false, bannerImage: "", registrationLink: "" });
     }
     setIsModalOpen(true);
   };
@@ -268,11 +270,16 @@ const AdminEvents = () => {
                     value={formData.title} onChange={e => setFormData({...formData, title: e.target.value})} />
                 </div>
 
-                <div className="grid grid-cols-2 gap-6">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
                   <div>
                     <label className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Display Date / Time</label>
                     <input type="text" required placeholder="June 2024" className="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
                       value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} />
+                  </div>
+                  <div>
+                    <label className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Auto-Archive After</label>
+                    <input type="date" className="w-full bg-gray-50 border border-gray-200 p-4 rounded-xl focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      value={formData.endDate} onChange={e => setFormData({...formData, endDate: e.target.value})} />
                   </div>
                   <div>
                     <label className="text-xs font-black text-gray-400 uppercase tracking-widest block mb-2">Event Status</label>

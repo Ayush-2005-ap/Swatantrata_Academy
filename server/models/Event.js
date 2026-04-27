@@ -19,6 +19,10 @@ const EventSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  endDate: {
+    type: Date,
+    default: null
+  },
   isPast: {
     type: Boolean,
     default: true

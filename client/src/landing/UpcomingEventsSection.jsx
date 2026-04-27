@@ -3,11 +3,13 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import { API_BASE_URL } from "../config";
 import { Calendar as CalendarIcon, Clock, ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const UpcomingEventsSection = () => {
   const [events, setEvents] = useState([]);
   const [isVisible, setIsVisible] = useState(true); // From Admin Settings
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     let interval = null;
@@ -125,7 +127,10 @@ const UpcomingEventsSection = () => {
                          </div>
                       </div>
 
-                      <button className="flex items-center text-blue-600 font-black gap-2 group/btn cursor-pointer">
+                      <button 
+                         onClick={() => navigate(`/programs/${event.programId}/events/${event.id}`)}
+                         className="flex items-center text-blue-600 font-black gap-2 group/btn cursor-pointer"
+                      >
                          <span className="uppercase tracking-widest text-xs">Learn More & Register</span> 
                          <ArrowRight className="w-5 h-5 group-hover/btn:translate-x-2 transition-transform duration-300" />
                       </button>
