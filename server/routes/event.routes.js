@@ -1,6 +1,7 @@
 import express from 'express';
 import Event from '../models/Event.js';
 import { protect } from '../middleware/auth.middleware.js';
+import { upload, uploadToCloudinary } from '../middleware/upload.middleware.js';
 
 const router = express.Router();
 
@@ -36,9 +37,17 @@ router.get('/:eventId', async (req, res) => {
 });
 
 // Create an event
-router.post('/', protect, async (req, res) => {
-  const event = new Event(req.body);
+router.post('/', protect, upload.single('banner'), async (req, res) => {
   try {
+    let bannerImage = req.body.bannerImage || '';
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      bannerImage = result.secure_url;
+      console.log('Uploaded new banner for fresh event:', bannerImage);
+    }
+    
+    const eventData = { ...req.body, bannerImage };
+    const event = new Event(eventData);
     const newEvent = await event.save();
     res.status(201).json(newEvent);
   } catch (err) {
@@ -47,12 +56,30 @@ router.post('/', protect, async (req, res) => {
 });
 
 // Update an event
-router.put('/:id', protect, async (req, res) => {
+router.put('/:id', protect, upload.single('banner'), async (req, res) => {
   try {
-    const updatedEvent = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedEvent) return res.status(404).json({ message: 'Event not found' });
+    const existing = await Event.findById(req.params.id);
+    if (!existing) return res.status(404).json({ message: 'Event not found' });
+
+    let bannerImage = existing.bannerImage;
+
+    if (req.file) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      bannerImage = result.secure_url;
+      console.log('Upload direct success:', bannerImage);
+    } else if (req.body.bannerImage !== undefined) {
+      bannerImage = req.body.bannerImage;
+    }
+
+    const updateData = {
+      ...req.body,
+      bannerImage
+    };
+
+    const updatedEvent = await Event.findByIdAndUpdate(req.params.id, updateData, { new: true });
     res.json(updatedEvent);
   } catch (err) {
+    console.error("Update error:", err);
     res.status(400).json({ message: err.message });
   }
 });

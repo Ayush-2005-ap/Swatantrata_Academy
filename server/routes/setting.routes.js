@@ -1,17 +1,24 @@
 import express from 'express';
 import Setting from '../models/Setting.js';
 import { protect } from '../middleware/auth.middleware.js';
-import { upload } from '../middleware/upload.middleware.js';
+import { upload, uploadToCloudinary } from '../middleware/upload.middleware.js';
 
 const router = express.Router();
 
 // Upload a video or image
-router.post('/upload', protect, upload.single('media'), (req, res) => {
+router.post('/upload', protect, upload.single('media'), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ message: 'No file uploaded' });
   }
-  const mediaUrl = req.file.path; // Cloudinary returns the full URL inside 'path'
-  res.json({ mediaUrl });
+  
+  try {
+    // Upload buffer directly to Cloudinary
+    const result = await uploadToCloudinary(req.file.buffer);
+    res.json({ mediaUrl: result.secure_url });
+  } catch (error) {
+    console.error("Cloudinary Error:", error);
+    res.status(500).json({ message: 'Failed to upload image' });
+  }
 });
 
 // Get all settings
